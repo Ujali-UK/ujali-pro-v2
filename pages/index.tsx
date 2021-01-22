@@ -1,10 +1,15 @@
 import { Login } from '../src/containers/auth/Login';
 import styles from '../styles/Home.module.css';
+import Wrapper from '../src/redux/wrapper/Wrapper';
 
-export default function Home() {
+const Home = () => {
   return (
     <div className={styles.container}>
-      <Login />
+      <Wrapper>
+        <Login />
+      </Wrapper>
     </div>
   );
-}
+};
+
+export default Home;
