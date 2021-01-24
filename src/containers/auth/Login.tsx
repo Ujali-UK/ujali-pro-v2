@@ -17,6 +17,7 @@ export const Login: React.FC = () => {
           <div>
             <button type="submit">Submit</button>
           </div>
+          <p>Forgot password</p>
         </form>
       </div>
     </div>
