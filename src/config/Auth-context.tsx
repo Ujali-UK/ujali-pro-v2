@@ -6,7 +6,7 @@ import 'firbase/auth';
 
 const AuthContext = createContext({});
 
-export const AuthProvider = ({ children }) => {
+export const AuthProvider: React.FC = ({ children }) => {
   firebaseClient();
   const [user, setUser] = useState(null);
 
