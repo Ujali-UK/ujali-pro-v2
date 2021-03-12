@@ -58,7 +58,7 @@
     "@types/react": "^17.0.0",
     "axios": "^0.21.1",
     "date-fns": "^2.19.0",
-    "firebase": "^8.2.7",
+    "firebase": "^8.3.0",
     "firebase-admin": "^9.5.0",
     "framer": "^1.2.20",
     "framer-motion": "^3.10.3",
