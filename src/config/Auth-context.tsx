@@ -2,7 +2,7 @@ import { firebaseClient } from '../../firbase/firebase.config';
 import React, { useState, useEffect, createContext } from 'react';
 import nookies from 'nookies';
 import firebase from 'firebase/app';
-import 'firbase/auth';
+// import 'firbase/auth';
 
 const AuthContext = createContext({});
 
