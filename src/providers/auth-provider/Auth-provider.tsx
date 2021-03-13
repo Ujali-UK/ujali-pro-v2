@@ -1,4 +1,10 @@
-import { useEffect, useState, createContext, FunctionComponent } from 'react';
+import {
+  useEffect,
+  useState,
+  createContext,
+  FunctionComponent,
+  useContext,
+} from 'react';
 import { firebase } from '../../utils/firbase-config';
 
 interface AuthProps {
@@ -35,4 +41,8 @@ const AuthProvider: FunctionComponent = ({ children }) => {
   );
 };
 
-export { AuthProvider };
+const useAuth = () => {
+  return useContext(AuthContext);
+};
+
+export { AuthProvider, useAuth };
