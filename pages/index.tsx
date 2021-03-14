@@ -1,21 +1,11 @@
-import { useAuth } from '../src/providers/auth-provider/Auth-provider';
-import Login from './login';
+import Protected from '../src/layout/Protected';
 
 const Home = () => {
-  const { user, loading, logout } = useAuth();
-
-  if (!user && !loading) {
-    return <Login />;
-  } else {
-    return (
-      <div>
-        Logged In
-        <div>
-          <button onClick={() => logout()}>logout</button>
-        </div>
-      </div>
-    );
-  }
+  return (
+    <Protected>
+      <h1>Logged in homepage</h1>
+    </Protected>
+  );
 };
 
 export default Home;
