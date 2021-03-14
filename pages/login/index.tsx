@@ -5,7 +5,7 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const onRegister = async e => {
+  const onLogin = async e => {
     e.preventDefault();
     try {
       await firebase.auth().signInWithEmailAndPassword(email, password);
@@ -18,7 +18,7 @@ const Login = () => {
 
   return (
     <div>
-      <form onSubmit={onRegister}>
+      <form onSubmit={onLogin}>
         <div>
           <input
             type="email"
