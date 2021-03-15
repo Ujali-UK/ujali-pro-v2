@@ -1,5 +1,4 @@
 import React from 'react';
-import { Box } from '@chakra-ui/react';
 import { useAuth } from '../providers/auth-provider/Auth-provider';
 import Login from '../../pages/login';
 
@@ -7,19 +6,19 @@ const Protected: React.FC = ({ children }) => {
   const { user, loading, logout } = useAuth();
 
   return (
-    <Box>
+    <div>
       {user && !loading ? (
-        <Box>
-          <Box>
+        <div>
+          <div>
             Navbar
             <button onClick={logout}>logout</button>
-          </Box>
+          </div>
           {children}
-        </Box>
+        </div>
       ) : (
         <Login />
       )}
-    </Box>
+    </div>
   );
 };
 
