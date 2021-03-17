@@ -1,4 +1,5 @@
 import { AuthProvider } from '../src/providers/auth-provider/Auth-provider';
+import { ToastProvider } from 'react-toast-notifications';
 import { ThemeProvider } from '@material-ui/core/styles';
 import { createMuiTheme, responsiveFontSizes } from '@material-ui/core/styles';
 
@@ -7,11 +8,13 @@ theme = responsiveFontSizes(theme);
 
 const MyApp = ({ Component, pageProps }) => {
   return (
-    <ThemeProvider theme={theme}>
-      <AuthProvider>
-        <Component {...pageProps} />
-      </AuthProvider>
-    </ThemeProvider>
+    <ToastProvider autoDismiss autoDismissTimeout={4000} placement="top-right">
+      <ThemeProvider theme={theme}>
+        <AuthProvider>
+          <Component {...pageProps} />
+        </AuthProvider>
+      </ThemeProvider>
+    </ToastProvider>
   );
 };
 
