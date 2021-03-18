@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { firebase } from '../../src/utils/firbase-config';
 import { useToasts } from 'react-toast-notifications';
+import Link from 'next/link';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -42,6 +43,9 @@ const Login = () => {
         </div>
         <button type="submit">{!loading ? 'Login' : 'Loading'}</button>
       </form>
+      <p>
+        Don't have an account? <Link href="/signup">Register</Link>{' '}
+      </p>
     </div>
   );
 };
