@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { firebase } from '../../src/utils/firbase-config';
 import { useToasts } from 'react-toast-notifications';
 import Link from 'next/link';
+import Public from '../../src/layout/Public';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -25,7 +26,7 @@ const Login = () => {
   };
 
   return (
-    <div>
+    <Public>
       <form onSubmit={onLogin}>
         <div>
           <input
@@ -46,7 +47,7 @@ const Login = () => {
       <p>
         Don't have an account? <Link href="/signup">Register</Link>{' '}
       </p>
-    </div>
+    </Public>
   );
 };
 

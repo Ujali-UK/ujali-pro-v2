@@ -2,6 +2,7 @@ import { AuthProvider } from '../src/providers/auth-provider/Auth-provider';
 import { ToastProvider } from 'react-toast-notifications';
 import { ThemeProvider } from '@material-ui/core/styles';
 import { createMuiTheme, responsiveFontSizes } from '@material-ui/core/styles';
+import '../src/styles/style.css';
 
 let theme = createMuiTheme();
 theme = responsiveFontSizes(theme);
