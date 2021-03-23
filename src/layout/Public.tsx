@@ -7,6 +7,9 @@ const Public: React.FC = ({ children }) => {
   const { user, loading } = useAuth();
   const router = useRouter();
 
+  /**
+   * Check if user already exist and determine page to render
+   */
   useEffect(() => {
     if (user && !loading) {
       router.push('/');
