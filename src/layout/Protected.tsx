@@ -4,6 +4,11 @@ import Login from '../../pages/login';
 import Navbar from '../components/navbar/Navbar';
 import PageLoader from '../components/loaders/PageLoader';
 
+/**
+ * @description: only show these pages when the user is logged in.
+ * @param param0
+ * @returns
+ */
 const Protected: React.FC = ({ children }) => {
   const { user, loading, logout } = useAuth();
 
