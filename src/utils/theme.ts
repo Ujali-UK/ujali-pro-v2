@@ -1,9 +1,10 @@
-import { createMuiTheme } from '@material-ui/core/styles';
+import { extendTheme } from '@chakra-ui/react';
 
-export const customTheme = createMuiTheme({
-  palette: {
-    primary: {
-      main: '#FF9717',
+export const customTheme = extendTheme({
+  colors: {
+    brand: {
+      100: '#f7fafc',
+      900: '#1a202c',
     },
   },
 });
