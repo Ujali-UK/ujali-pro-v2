@@ -3,8 +3,19 @@ import { extendTheme } from '@chakra-ui/react';
 export const customTheme = extendTheme({
   colors: {
     brand: {
-      100: '#f7fafc',
-      900: '#1a202c',
+      orange: '#FF9717',
+      gray: '#707070',
+    },
+  },
+  styles: {
+    global: {
+      'html, body': {
+        lineHeight: 'tall',
+        color: '#707070',
+      },
+      a: {
+        color: '#FF9717',
+      },
     },
   },
 });

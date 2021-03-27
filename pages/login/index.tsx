@@ -3,8 +3,9 @@ import { firebase } from '../../src/utils/firbase-config';
 import { useToasts } from 'react-toast-notifications';
 import Link from 'next/link';
 import Public from '../../src/layout/Public';
-import { Box, Button } from '@chakra-ui/react';
+import { Box, Button, Text } from '@chakra-ui/react';
 import InputField from '../../src/components/inputs/Input-field';
+import { SecurityKey } from '../../src/assets/icons/icons';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -36,13 +37,27 @@ const Login = () => {
           d="flex"
           justifyContent="center"
         >
-          <Box width="100%" px={{ md: '8rem' }}>
+          <Box
+            width="100%"
+            border="1px solid #707070"
+            borderRadius="1rem"
+            px="2rem"
+            py={{ base: '2rem', md: '3rem' }}
+            mx={{ md: '8rem' }}
+            mt={{ base: '2rem', md: '4rem' }}
+          >
+            <Box display="flex" justifyContent="center">
+              <Text>
+                <SecurityKey /> USER LOGIN
+              </Text>
+            </Box>
             <form onSubmit={onLogin}>
               <Box mb="2rem">
                 <InputField
                   value={email}
                   label="Email"
                   type="email"
+                  placeholder="Email"
                   required
                   onChange={e => setEmail(e.target.value)}
                 />
@@ -51,6 +66,7 @@ const Login = () => {
                 value={password}
                 label="Password"
                 type="password"
+                placeholder="Password"
                 required
                 onChange={e => setPassword(e.target.value)}
               />
@@ -58,16 +74,31 @@ const Login = () => {
                 disabled={loading}
                 borderRadius="lg"
                 color="white"
+                bgColor="brand.orange"
                 width="50%"
+                _hover={{
+                  bgColor: 'brand.gray',
+                }}
                 type="submit"
                 mt="2rem"
               >
                 {!loading ? ' Log In' : 'Loading...'}
               </Button>
             </form>
-            <p>
-              Don't have an account? <Link href="/signup">Register</Link>{' '}
-            </p>
+            <Box
+              display="flex"
+              mt="1rem"
+              fontSize="xs"
+              justifyContent="space-between"
+            >
+              <Text>
+                Don't have an account? <Link href="/signup">Register</Link>{' '}
+              </Text>
+
+              <Text color="brand.orange">
+                <Link href="/signup">Forgot Password</Link>{' '}
+              </Text>
+            </Box>
           </Box>
         </Box>
       </Box>
