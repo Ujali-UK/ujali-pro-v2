@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useAuth } from '../providers/auth-provider/Auth-provider';
 import { useRouter } from 'next/router';
 import PageLoader from '../components/loaders/PageLoader';
+import { Box } from '@chakra-ui/layout';
 
 const Public: React.FC = ({ children }) => {
   const { user, loading } = useAuth();
@@ -15,7 +16,17 @@ const Public: React.FC = ({ children }) => {
       router.push('/');
     }
   }, [user, loading]);
-  return <div>{!loading ? <div>{children}</div> : <PageLoader />}</div>;
+  return (
+    <Box
+      minHeight="100vh"
+      backgroundImage="url('https://res.cloudinary.com/w3bh4ck/image/upload/v1616956021/ujali/ujali-pro/background-white.jpg')"
+      backgroundSize="cover"
+      backgroundRepeat="no-repeat"
+      backgroundPosition="center"
+    >
+      {!loading ? <div>{children}</div> : <PageLoader />}
+    </Box>
+  );
 };
 
 export default Public;
