@@ -1,16 +1,15 @@
 import React, { useState } from 'react';
-import { firebase } from '../../src/utils/firbase-config';
 import { useToasts } from 'react-toast-notifications';
 import Link from 'next/link';
-import Public from '../../src/layout/Public';
 import { Box, Button, Text } from '@chakra-ui/react';
-import InputField from '../../src/components/inputs/Input-field';
-import { SecurityKey } from '../../src/assets/icons/icons';
-import AuthWrapper from '../../src/layout/Auth-wrapper';
+import { firebase } from '../../../src/utils/firbase-config';
+import Public from '../../../src/layout/Public';
+import AuthWrapper from '../../../src/layout/Auth-wrapper';
+import { SecurityKey } from '../../../src/assets/icons/icons';
+import InputField from '../../../src/components/inputs/Input-field';
 
-const Login = () => {
+const ForgotPassword = () => {
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const { addToast } = useToasts();
 
@@ -18,8 +17,12 @@ const Login = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      await firebase.auth().signInWithEmailAndPassword(email, password);
+      await firebase.auth().sendPasswordResetEmail(email);
+      addToast('A password reset link has been sent to your email', {
+        appearance: 'success',
+      });
       setLoading(false);
+      setEmail('');
     } catch (error) {
       if (error) {
         addToast(error?.message, { appearance: 'error' });
@@ -39,7 +42,7 @@ const Login = () => {
             borderRadius="1rem"
             px="2rem"
             bgColor="white"
-            minHeight="30rem"
+            minHeight="20rem"
             py={{ base: '2rem', md: '3rem' }}
             mx={{ md: '8rem', base: '1rem' }}
             mt={{ base: '2rem', md: '10rem' }}
@@ -47,28 +50,21 @@ const Login = () => {
           >
             <Box display="flex" justifyContent="center">
               <Text>
-                <SecurityKey /> USER LOGIN
+                <SecurityKey /> FORGOT PASSWORD
               </Text>
             </Box>
             <form onSubmit={onLogin}>
-              <Box mb="2rem">
+              <Box mb="2rem" mt="2rem">
                 <InputField
                   value={email}
                   label="Email"
                   type="email"
-                  placeholder="Email"
+                  placeholder="Enter your account email..."
                   required
                   onChange={e => setEmail(e.target.value)}
                 />
               </Box>
-              <InputField
-                value={password}
-                label="Password"
-                type="password"
-                placeholder="Password"
-                required
-                onChange={e => setPassword(e.target.value)}
-              />
+
               <Button
                 disabled={loading}
                 borderRadius="lg"
@@ -93,10 +89,6 @@ const Login = () => {
               <Text>
                 Don't have an account? <Link href="/signup">Register</Link>{' '}
               </Text>
-
-              <Text color="brand.orange">
-                <Link href="/auth/forgot-password">Forgot Password</Link>{' '}
-              </Text>
             </Box>
           </Box>
         </Box>
@@ -105,4 +97,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default ForgotPassword;
