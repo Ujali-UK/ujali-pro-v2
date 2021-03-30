@@ -31,7 +31,7 @@ const InputField: React.FC<Iprops> = ({
   return (
     <FormControl isRequired={required}>
       <FormLabel>{label}</FormLabel>
-      <InputGroup {...props} width="100%" size="lg" borderRadius="xs">
+      <InputGroup {...props} width="100%" size="md" borderRadius="xs">
         <Input
           value={value}
           width="100%"
