@@ -3,7 +3,6 @@ import { FormLabel } from '@chakra-ui/form-control';
 import { Box, Text } from '@chakra-ui/layout';
 import { Select } from '@chakra-ui/select';
 import { Switch } from '@chakra-ui/switch';
-import { firestore } from 'firebase-admin';
 import Link from 'next/link';
 import React, { useState } from 'react';
 import { useToasts } from 'react-toast-notifications';
@@ -32,18 +31,7 @@ const SignUp = () => {
         newUser.updateProfile({
           displayName: name,
         });
-        if (newUser && newUser.uid) {
-          const db = firebase.firestore();
-          db.collection('users').add({
-            accountType: accountType,
-            fullName: name,
-            uid: newUser.uid,
-            createdAt: firestore.Timestamp.now(),
-            email: email,
-            registration: true,
-            checkedReceive: true,
-          });
-        }
+        createUserAccountType(newUser);
         console.log('there is a new user', newUser);
         setLoading(false);
       } catch (error) {
@@ -62,6 +50,22 @@ const SignUp = () => {
     }
   };
 
+  const createUserAccountType = async newUser => {
+    const db = await firebase.firestore();
+    if (db && newUser && newUser.uid) {
+      db.collection('users').add({
+        accountType: accountType,
+        fullName: name,
+        uid: newUser.uid,
+        email: email,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+        registration: true,
+        checkedReceive: true,
+      });
+      db.terminate();
+    }
+  };
+
   return (
     <Public>
       <AuthWrapper>
@@ -73,9 +77,9 @@ const SignUp = () => {
             px="2rem"
             bgColor="white"
             minHeight="30rem"
-            py={{ base: '2rem', md: '3rem' }}
+            py={{ base: '1rem', md: '1rem' }}
             mx={{ md: '8rem', base: '1rem' }}
-            mt={{ base: '2rem', md: '8rem' }}
+            mt={{ base: '2rem', md: '6rem' }}
             shadow="xs"
           >
             <Box display="flex" justifyContent="center">
@@ -177,3 +181,8 @@ const SignUp = () => {
 };
 
 export default SignUp;
+
+// export const getServerSideProps: GetServerSideProps = async (context) => {
+//   const db = firebase.firestore();
+//   return { props: { db } }
+// }

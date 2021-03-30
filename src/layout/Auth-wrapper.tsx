@@ -20,7 +20,7 @@ const AuthWrapper: React.FC<Props> = ({ children }) => {
           d={{ md: 'flex', base: 'none' }}
           justifyContent="center"
         >
-          <Box mt="4rem">
+          <Box mt="2rem">
             <LandingLogo boxSize={{ md: '40rem' }} role="presentation" />
           </Box>
         </Box>
