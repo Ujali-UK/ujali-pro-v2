@@ -1,6 +1,9 @@
 import { Button } from '@chakra-ui/button';
+import { FormLabel } from '@chakra-ui/form-control';
 import { Box, Text } from '@chakra-ui/layout';
+import { Select } from '@chakra-ui/select';
 import { Switch } from '@chakra-ui/switch';
+import { firestore } from 'firebase-admin';
 import Link from 'next/link';
 import React, { useState } from 'react';
 import { useToasts } from 'react-toast-notifications';
@@ -15,26 +18,47 @@ const SignUp = () => {
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
   const [loading, setLoading] = useState(false);
+  const [accountType, setAccountType] = useState('');
+  const [checkedAccept, setCheckedAccept] = useState(false);
   const { addToast } = useToasts();
 
   const onRegister = async e => {
     e.preventDefault();
-    setLoading(true);
-    try {
-      await firebase.auth().createUserWithEmailAndPassword(email, password);
-      const newUser = firebase.auth().currentUser;
-      newUser.updateProfile({
-        displayName: name,
-      });
-      setLoading(false);
-    } catch (error) {
-      setLoading(false);
-      if (error) {
-        if (error && error.message) {
-          addToast(error?.message, { appearance: 'error' });
+    if (checkedAccept) {
+      setLoading(true);
+      try {
+        await firebase.auth().createUserWithEmailAndPassword(email, password);
+        const newUser = firebase.auth().currentUser;
+        newUser.updateProfile({
+          displayName: name,
+        });
+        if (newUser && newUser.uid) {
+          const db = firebase.firestore();
+          db.collection('users').add({
+            accountType: accountType,
+            fullName: name,
+            uid: newUser.uid,
+            createdAt: firestore.Timestamp.now(),
+            email: email,
+            registration: true,
+            checkedReceive: true,
+          });
         }
-        return error;
+        console.log('there is a new user', newUser);
+        setLoading(false);
+      } catch (error) {
+        setLoading(false);
+        if (error) {
+          if (error && error.message) {
+            addToast(error?.message, { appearance: 'error' });
+          }
+          return error;
+        }
       }
+    } else {
+      addToast('You have to accept the terms to continue', {
+        appearance: 'warning',
+      });
     }
   };
 
@@ -60,7 +84,7 @@ const SignUp = () => {
               </Text>
             </Box>
             <form onSubmit={onRegister}>
-              <Box mb="2rem">
+              <Box mb="1rem">
                 <InputField
                   value={name}
                   label="Full Name"
@@ -70,7 +94,7 @@ const SignUp = () => {
                   onChange={e => setName(e.target.value)}
                 />
               </Box>
-              <Box mb="2rem">
+              <Box mb="1rem">
                 <InputField
                   value={email}
                   label="Email"
@@ -79,6 +103,19 @@ const SignUp = () => {
                   required
                   onChange={e => setEmail(e.target.value)}
                 />
+              </Box>
+
+              <Box mb="1rem">
+                <FormLabel>Account Type</FormLabel>
+                <Select
+                  value={accountType}
+                  onChange={e => setAccountType(e.target.value)}
+                  placeholder="Select account type"
+                  isRequired
+                >
+                  <option value="facilitator">Facilitator</option>
+                  <option value="company">Company</option>
+                </Select>
               </Box>
 
               <InputField
@@ -100,7 +137,12 @@ const SignUp = () => {
                     terms and conditions
                   </a>{' '}
                 </Text>{' '}
-                <Switch ml="1rem" colorScheme="brand.orange" />
+                <Switch
+                  ml="1rem"
+                  isChecked={checkedAccept}
+                  onChange={() => setCheckedAccept(!checkedAccept)}
+                  colorScheme="orange"
+                />
               </Box>
               <Button
                 disabled={loading}
