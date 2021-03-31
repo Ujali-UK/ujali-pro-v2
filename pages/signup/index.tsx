@@ -31,8 +31,20 @@ const SignUp = () => {
         newUser.updateProfile({
           displayName: name,
         });
-        createUserAccountType(newUser);
-        console.log('there is a new user', newUser);
+        const db = firebase.firestore();
+        if (newUser && newUser.uid) {
+          db.collection('users').add({
+            accountType: accountType,
+            fullName: name,
+            uid: newUser.uid,
+            email: email,
+            createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+            registration: true,
+            checkedReceive: true,
+          });
+          db.terminate();
+        }
+        addToast('Account created successfully', { appearance: 'success' });
         setLoading(false);
       } catch (error) {
         setLoading(false);
@@ -47,22 +59,6 @@ const SignUp = () => {
       addToast('You have to accept the terms to continue', {
         appearance: 'warning',
       });
-    }
-  };
-
-  const createUserAccountType = async newUser => {
-    const db = await firebase.firestore();
-    if (db && newUser && newUser.uid) {
-      db.collection('users').add({
-        accountType: accountType,
-        fullName: name,
-        uid: newUser.uid,
-        email: email,
-        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-        registration: true,
-        checkedReceive: true,
-      });
-      db.terminate();
     }
   };
 
