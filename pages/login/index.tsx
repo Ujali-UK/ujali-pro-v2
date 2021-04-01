@@ -42,7 +42,7 @@ const Login = () => {
             minHeight="30rem"
             py={{ base: '2rem', md: '3rem' }}
             mx={{ md: '8rem', base: '1rem' }}
-            mt={{ base: '2rem', md: '10rem' }}
+            mt={{ base: '2rem', md: '5rem' }}
             shadow="xs"
           >
             <Box display="flex" justifyContent="center">
