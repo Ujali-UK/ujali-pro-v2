@@ -75,7 +75,7 @@ const SignUp = () => {
             minHeight="30rem"
             py={{ base: '1rem', md: '1rem' }}
             mx={{ md: '8rem', base: '1rem' }}
-            mt={{ base: '2rem', md: '6rem' }}
+            mt={{ base: '2rem', md: '5rem' }}
             shadow="xs"
           >
             <Box display="flex" justifyContent="center">
