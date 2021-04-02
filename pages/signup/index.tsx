@@ -33,11 +33,11 @@ const SignUp = () => {
         });
         const db = firebase.firestore();
         if (newUser && newUser.uid) {
-          db.collection('users').add({
+          await db.collection('users').doc(newUser.uid).set({
             accountType: accountType,
             fullName: name,
-            uid: newUser.uid,
             email: email,
+            uid: newUser.uid,
             createdAt: firebase.firestore.FieldValue.serverTimestamp(),
             registration: true,
             checkedReceive: true,
