@@ -1,11 +1,12 @@
-import Protected from '../src/layout/Protected';
 import { useAuth } from '../src/providers/auth-provider/Auth-provider';
 import { useEffect, useState } from 'react';
 import { GetServerSideProps } from 'next';
 import { firebase } from '../src/utils/firbase-config';
 import PageLoader from '../src/components/loaders/PageLoader';
+import { Box } from '@chakra-ui/layout';
+import { withRouter } from 'next/router';
 
-const Home = () => {
+const Home = ({ router }) => {
   const [loading, setLoading] = useState(false);
   const { user } = useAuth();
 
@@ -18,7 +19,7 @@ const Home = () => {
 
   const getUserDetails = async () => {
     const db = firebase.firestore();
-    let userResponse = {};
+    let userResponse;
     db.collection('users')
       .where('uid', '==', user.uid)
       .get()
@@ -26,23 +27,23 @@ const Home = () => {
         snapshot.forEach(doc => {
           userResponse = doc.data();
         });
-        setLoading(false);
       })
       .then(() => {
-        return userResponse;
+        if (userResponse?.accountType.toLowerCase() === 'facilitator') {
+          router.push('/facilitator/onboarding/overview');
+        }
+        setLoading(false);
       })
       .catch(error => {
         setLoading(false);
       });
   };
 
-  return (
-    <Protected>{loading ? <PageLoader /> : <div> logged in</div>}</Protected>
-  );
+  return <Box>{loading ? <PageLoader /> : <div> logged in</div>}</Box>;
 };
 
 export const getServerSideProps: GetServerSideProps = async () => {
   return { props: { name: 'hello' } };
 };
 
-export default Home;
+export default withRouter(Home);
