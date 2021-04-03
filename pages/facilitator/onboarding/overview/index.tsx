@@ -1,5 +1,7 @@
+import Protected from '../../../../src/layout/Protected';
+
 const index = () => {
-  return <div>This is the facilitator over-view</div>;
+  return <Protected>This is the facilitator over-view</Protected>;
 };
 
 export default index;
