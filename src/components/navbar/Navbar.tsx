@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import { UjaliLogo } from '../../assets/logos/ujali-logo';
 import {
   Box,
@@ -9,8 +9,15 @@ import {
   MenuList,
 } from '@chakra-ui/react';
 import { MdArrowDropDown } from 'react-icons/md';
+import { useAuth } from '../../providers/auth-provider/Auth-provider';
 
 const Navbar: FC = () => {
+  const { user, logout } = useAuth();
+
+  useEffect(() => {
+    console.log('user', user);
+  }, [user]);
+
   return (
     <Box
       bgColor="#ffffff"
@@ -24,28 +31,28 @@ const Navbar: FC = () => {
         <UjaliLogo boxSize={{ md: '3rem', base: '2rem' }} />
       </Box>
       <Box display="flex" fontWeight="bold">
+        <Box>
+          <Image
+            mt="2"
+            src="https://bit.ly/sage-adebayo"
+            height="3rem"
+            width="3rem"
+            alt="profile-photo"
+            borderRadius="full"
+          />
+        </Box>
         <Menu>
-          <MenuButton>
-            <Image
-              mt="2"
-              src="https://bit.ly/sage-adebayo"
-              height="3rem"
-              width="3rem"
-              alt="profile-photo"
-              borderRadius="full"
-            />
+          <MenuButton fontSize="3xl" pt="1">
+            <MdArrowDropDown />
           </MenuButton>
           <MenuList>
             <MenuItem>Profile Settings</MenuItem>
             <MenuItem>Create a Copy</MenuItem>
-            <MenuItem>Sign Out</MenuItem>
+            <MenuItem onClick={logout}>Sign Out</MenuItem>
             <MenuItem>Contact Ujali</MenuItem>
             <MenuItem>Book a Workshop</MenuItem>
           </MenuList>
         </Menu>
-        <Box fontSize="2xl" pt="5">
-          <MdArrowDropDown />
-        </Box>
       </Box>
     </Box>
   );
