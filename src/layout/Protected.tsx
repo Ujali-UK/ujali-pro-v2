@@ -10,7 +10,7 @@ import PageLoader from '../components/loaders/PageLoader';
  * @returns
  */
 const Protected: React.FC = ({ children }) => {
-  const { user, loading, logout } = useAuth();
+  const { user, loading } = useAuth();
 
   return (
     <div>
@@ -19,10 +19,6 @@ const Protected: React.FC = ({ children }) => {
           {user && !loading ? (
             <div>
               <Navbar />
-              <div>
-                Navbar
-                <button onClick={logout}>logout</button>
-              </div>
               {children}
             </div>
           ) : (

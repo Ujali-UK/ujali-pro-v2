@@ -5,6 +5,7 @@ import { firebase } from '../src/utils/firbase-config';
 import PageLoader from '../src/components/loaders/PageLoader';
 import { Box } from '@chakra-ui/layout';
 import { withRouter } from 'next/router';
+import Protected from '../src/layout/Protected';
 
 const Home = ({ router }) => {
   const [loading, setLoading] = useState(false);
@@ -39,7 +40,9 @@ const Home = ({ router }) => {
       });
   };
 
-  return <Box>{loading ? <PageLoader /> : <div> logged in</div>}</Box>;
+  return (
+    <Box>{loading ? <PageLoader /> : <Protected> logged in</Protected>}</Box>
+  );
 };
 
 export const getServerSideProps: GetServerSideProps = async () => {
