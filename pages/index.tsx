@@ -12,13 +12,13 @@ const Home = ({ router }) => {
   const { user } = useAuth();
 
   useEffect(() => {
-    setLoading(true);
     if (user) {
       getUserDetails();
     }
   }, [user]);
 
   const getUserDetails = async () => {
+    setLoading(true);
     const db = firebase.firestore();
     let userResponse;
     db.collection('users')
@@ -38,6 +38,8 @@ const Home = ({ router }) => {
       .catch(error => {
         setLoading(false);
       });
+
+    setLoading(false);
   };
 
   return (
