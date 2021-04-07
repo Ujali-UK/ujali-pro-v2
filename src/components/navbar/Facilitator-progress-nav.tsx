@@ -6,7 +6,7 @@ const FacilitatorProgres = () => {
   return (
     <Box height="6rem" bgColor="brand.gray">
       <StyledList>
-        <li className="progress-tab done">
+        <li className="progress-tab">
           <span />
           Overview
         </li>
