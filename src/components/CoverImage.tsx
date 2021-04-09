@@ -2,6 +2,10 @@ import { Box } from '@chakra-ui/layout';
 import React from 'react';
 import styled from 'styled-components';
 
+/**
+ * @description: change cover image
+ * @returns Cover image component
+ */
 const CoverImage = () => {
   return (
     <Box
