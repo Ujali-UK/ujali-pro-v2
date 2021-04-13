@@ -37,7 +37,7 @@ const Navbar: FC = () => {
             src="https://bit.ly/sage-adebayo"
             height="3rem"
             width="3rem"
-            alt="profile-photo"
+            alt="ac"
             borderRadius="full"
           />
         </Box>

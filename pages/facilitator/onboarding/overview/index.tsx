@@ -1,8 +1,9 @@
 import CoverImage from '../../../../src/components/CoverImage';
 import FacilitatorProgres from '../../../../src/components/navbar/Facilitator-progress-nav';
 import Protected from '../../../../src/layout/Protected';
+// import { firebase } from '../../../../src/utils/firbase-config'
 
-const index = () => {
+const Overview = () => {
   return (
     <Protected>
       <FacilitatorProgres />
@@ -12,4 +13,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default Overview;
