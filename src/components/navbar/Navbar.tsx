@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from 'react';
+import React, { FC } from 'react';
 import { UjaliLogo } from '../../assets/logos/ujali-logo';
 import {
   Box,
@@ -13,10 +13,6 @@ import { useAuth } from '../../providers/auth-provider/Auth-provider';
 
 const Navbar: FC = () => {
   const { user, logout } = useAuth();
-
-  useEffect(() => {
-    console.log('user', user);
-  }, [user]);
 
   return (
     <Box
@@ -34,10 +30,10 @@ const Navbar: FC = () => {
         <Box>
           <Image
             mt="2"
-            src="https://bit.ly/sage-adebayo"
+            src={user.photoUrl ? user.photoUrl : 'https://bit.ly/sage-adebayo'}
             height="3rem"
             width="3rem"
-            alt="profile-photo"
+            alt="ac"
             borderRadius="full"
           />
         </Box>
