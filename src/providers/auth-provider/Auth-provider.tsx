@@ -8,7 +8,7 @@ import {
 import { firebase } from '../../utils/firbase-config';
 
 interface AuthProps {
-  user: firebase.User | null;
+  user: any;
   loading: boolean;
   logout: () => void;
 }

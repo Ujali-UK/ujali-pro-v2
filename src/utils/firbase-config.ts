@@ -20,5 +20,6 @@ const initFirebase = () => {
 };
 
 initFirebase();
+const database = firebase.firestore();
 
-export { firebase };
+export { firebase, database };

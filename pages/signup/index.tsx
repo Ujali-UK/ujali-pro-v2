@@ -42,6 +42,19 @@ const SignUp = () => {
             registration: true,
             checkedReceive: true,
           });
+          if (accountType === 'facilitator') {
+            await db.collection('facilitator').add({
+              userUIDS: [newUser.uid],
+              ownerUID: newUser.uid,
+              createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+            });
+          } else {
+            await db.collection('facilitator').add({
+              userUIDS: [newUser.uid],
+              ownerUID: newUser.uid,
+              createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+            });
+          }
           db.terminate();
         }
         addToast('Account created successfully', { appearance: 'success' });
