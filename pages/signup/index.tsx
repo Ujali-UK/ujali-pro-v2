@@ -33,29 +33,54 @@ const SignUp = () => {
         });
         const db = firebase.firestore();
         if (newUser && newUser.uid) {
-          await db.collection('users').doc(newUser.uid).set({
-            accountType: accountType,
-            fullName: name,
-            email: email,
-            uid: newUser.uid,
-            createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-            registration: true,
-            checkedReceive: true,
-          });
-          if (accountType === 'facilitator') {
-            await db.collection('facilitator').add({
-              userUIDS: [newUser.uid],
-              ownerUID: newUser.uid,
+          await db
+            .collection('users')
+            .doc(newUser.uid)
+            .set({
+              accountType: accountType,
+              fullName: name,
+              email: email,
+              uid: newUser.uid,
               createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+              registration: true,
+              checkedReceive: true,
+            })
+            .then(async () => {
+              if (accountType === 'facilitator') {
+                await db
+                  .collection('facilitators')
+                  .add({
+                    userUIDS: [newUser.uid],
+                    ownerUID: newUser.uid,
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                  })
+                  .then(async docRef => {
+                    await db.collection('facilitators').doc(docRef.id).set(
+                      {
+                        id: docRef.id,
+                      },
+                      { merge: true }
+                    );
+                  });
+              } else {
+                await db
+                  .collection('companies')
+                  .add({
+                    userUIDS: [newUser.uid],
+                    ownerUID: newUser.uid,
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                  })
+                  .then(async docRef => {
+                    await db.collection('companies').doc(docRef.id).set(
+                      {
+                        id: docRef.id,
+                      },
+                      { merge: true }
+                    );
+                  });
+              }
             });
-          } else {
-            await db.collection('facilitator').add({
-              userUIDS: [newUser.uid],
-              ownerUID: newUser.uid,
-              createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-            });
-          }
-          db.terminate();
+          // db.terminate();
         }
         addToast('Account created successfully', { appearance: 'success' });
         setLoading(false);
