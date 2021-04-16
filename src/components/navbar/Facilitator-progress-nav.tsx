@@ -8,7 +8,7 @@ interface Iprops {
 
 const FacilitatorProgres: React.FC<Iprops> = ({ facilitatorDetails }) => {
   return (
-    <Box height="6rem" bgColor="brand.gray">
+    <Box height="6rem" bgColor="brand.gray" overflowX="scroll">
       <StyledList>
         <li className="progress-tab">
           <span />
@@ -37,8 +37,11 @@ const StyledList = styled.ul`
 counter-reset: step;
   padding-top: 1rem;
   width: 100%;
-  overflow: hidden;
+  overflow-x: scroll;
   padding-bottom: .9rem;
+  @media (max-width: 768px) {
+    width: 900px;
+  }
  li{
    list-style: none;
   display: inline-block;
