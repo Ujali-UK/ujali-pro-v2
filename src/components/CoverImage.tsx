@@ -1,25 +1,34 @@
 import { Box } from '@chakra-ui/layout';
-import React from 'react';
+import React, { useState } from 'react';
 import { useToast } from '@chakra-ui/react';
 import styled from 'styled-components';
 import { useAuth } from '../providers/auth-provider/Auth-provider';
 import { firebase } from '../utils/firbase-config';
 
+interface Iprops {
+  coverImage: string | null;
+  getFacilitatorDetails: () => void;
+}
+
 /**
  * @description: change cover image
  * @returns Cover image component
  */
-const CoverImage = () => {
+const CoverImage: React.FC<Iprops> = ({
+  coverImage,
+  getFacilitatorDetails,
+}) => {
   const { user, userInfo } = useAuth();
+  const [loading, setLoading] = useState(false);
   const toast = useToast();
 
   // Save cover image and get cover image URL
   const onUploadImage = async file => {
+    setLoading(true);
     const storageRef = await firebase.storage().ref(`users/${user.uid}`);
     const childFolder = await storageRef.child(user.uid);
     childFolder.put(file).then(snapshot => {
       snapshot.ref.getDownloadURL().then(async url => {
-        console.log('file uploaded', url, userInfo, user);
         if (userInfo && userInfo.accountType === 'facilitator') {
           const db = await firebase.firestore();
           await db
@@ -34,12 +43,16 @@ const CoverImage = () => {
                     coverImage: url,
                   })
                   .then(() => {
+                    getFacilitatorDetails();
                     toast({
                       title: 'Cover image uploaded successfully.',
                       status: 'success',
                       duration: 4000,
                       isClosable: true,
                     });
+                  })
+                  .finally(() => {
+                    setLoading(false);
                   });
               });
             });
@@ -56,14 +69,18 @@ const CoverImage = () => {
       width="full"
       color="#ffffff"
       textAlign="center"
-      bgImage="url('https://res.cloudinary.com/w3bh4ck/image/upload/v1617668753/ujali/ujali-pro/facilitators-cover-image.jpg')"
+      bgImage={
+        coverImage && coverImage.length > 0
+          ? `url(${coverImage})`
+          : "url('https://res.cloudinary.com/w3bh4ck/image/upload/v1617668753/ujali/ujali-pro/facilitators-cover-image.jpg')"
+      }
       backgroundRepeat="no-repeat"
       bgPosition="center"
       bgSize="cover"
     >
       <StyledImageButton>
         <input onChange={e => onUploadImage(e.target.files[0])} type="file" />
-        <span> Change Cover Image</span>
+        <span> {loading ? 'Loading...' : 'Change Cover Image'}</span>
       </StyledImageButton>
     </Box>
   );
