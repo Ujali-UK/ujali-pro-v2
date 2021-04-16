@@ -43,7 +43,6 @@ const Navbar: FC = () => {
           </MenuButton>
           <MenuList>
             <MenuItem>Profile Settings</MenuItem>
-            <MenuItem>Create a Copy</MenuItem>
             <MenuItem onClick={logout}>Sign Out</MenuItem>
             <MenuItem>Contact Ujali</MenuItem>
             <MenuItem>Book a Workshop</MenuItem>

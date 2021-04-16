@@ -16,6 +16,7 @@ interface Iprops {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   required?: boolean;
   props?: any;
+  height?: string;
 }
 
 const InputField: React.FC<Iprops> = ({
@@ -25,15 +26,18 @@ const InputField: React.FC<Iprops> = ({
   onChange,
   label,
   required,
+  height,
   ...props
 }) => {
   const [showPassword, setShowPassword] = useState(false);
   return (
     <FormControl isRequired={required}>
-      <FormLabel>{label}</FormLabel>
-      <InputGroup {...props} width="100%" size="md" borderRadius="xs">
+      <FormLabel fontWeight="bold">{label}</FormLabel>
+      <InputGroup width="100%" size="md" borderRadius="xs">
         <Input
+          {...props}
           value={value}
+          height={height}
           width="100%"
           onChange={onChange}
           type={!showPassword ? type : 'text'}
