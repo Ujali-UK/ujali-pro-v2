@@ -2,7 +2,11 @@ import { Box } from '@chakra-ui/layout';
 import React from 'react';
 import styled from 'styled-components';
 
-const FacilitatorProgres = () => {
+interface Iprops {
+  facilitatorDetails?: any;
+}
+
+const FacilitatorProgres: React.FC<Iprops> = ({ facilitatorDetails }) => {
   return (
     <Box height="6rem" bgColor="brand.gray">
       <StyledList>
