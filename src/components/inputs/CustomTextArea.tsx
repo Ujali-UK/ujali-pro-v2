@@ -28,6 +28,7 @@ const CustomTextArea: React.FC<Iprops> = ({
           {...props}
           value={value}
           height={height}
+          bgColor="#f1f1f6"
           width="100%"
           onChange={onChange}
           size="lg"
