@@ -6,12 +6,18 @@ const customStyles = {
   control: provided => ({
     ...provided,
     background: '#f1f1f6',
+    color: '#ffffff',
     border: 'none',
-    height: '3rem',
+    minHeight: '3rem',
   }),
   multiValue: provided => ({
     ...provided,
-    backgroundColor: '#ffffff',
+    backgroundColor: '#FF9717',
+    color: '#ffffff',
+  }),
+  multiValueLabel: provided => ({
+    ...provided,
+    color: '#ffffff',
   }),
 };
 
@@ -20,6 +26,7 @@ const CustomMultiSelect = ({ onChange, value }) => {
     <Box>
       <Select
         isMulti
+        isSearchable
         name="colors"
         onChange={onChange}
         value={value}
