@@ -10,20 +10,50 @@ const FacilitatorProgres: React.FC<Iprops> = ({ facilitatorDetails }) => {
   return (
     <Box height="6rem" bgColor="brand.gray" overflowX="scroll">
       <StyledList>
-        <li className="progress-tab">
+        <li
+          className={
+            facilitatorDetails?.overview === true
+              ? 'progress-tab done'
+              : 'progress-tab'
+          }
+        >
           <span />
           Overview
         </li>
-        <li className="progress-tab">
+        <li
+          className={
+            facilitatorDetails?.ratesAndRequirements === true
+              ? 'progress-tab done'
+              : 'progress-tab'
+          }
+        >
           <span /> Rates & Requirements
         </li>
-        <li className="progress-tab">
+        <li
+          className={
+            facilitatorDetails?.deliveryStyle === true
+              ? 'progress-tab done'
+              : 'progress-tab'
+          }
+        >
           <span /> Delivery style
         </li>
-        <li className="progress-tab">
+        <li
+          className={
+            facilitatorDetails?.valuesAndInterests === true
+              ? 'progress-tab done'
+              : 'progress-tab'
+          }
+        >
           <span /> Values & Interests
         </li>
-        <li className="progress-tab">
+        <li
+          className={
+            facilitatorDetails?.workshopsAndEvents === true
+              ? 'progress-tab done'
+              : 'progress-tab'
+          }
+        >
           <span /> Workshops & Events
         </li>
       </StyledList>
