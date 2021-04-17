@@ -1,5 +1,9 @@
-import { Box } from '@chakra-ui/layout';
+import { Button } from '@chakra-ui/button';
+import { FormLabel } from '@chakra-ui/form-control';
+import Icon from '@chakra-ui/icon';
+import { Box, Divider, Text } from '@chakra-ui/layout';
 import { useEffect, useState } from 'react';
+import { MdArrowForward, MdDelete } from 'react-icons/md';
 import CustomHeading from '../../../../src/components/common/custom-heading';
 import CustomMultiSelect from '../../../../src/components/common/multi-select';
 import CoverImage from '../../../../src/components/CoverImage';
@@ -23,6 +27,17 @@ const Overview = () => {
   const [companyEmail, setCompanyEmail] = useState('');
   const [companyPhone, setCompanyPhone] = useState('');
   const [servicesOffer, setServicesOffer] = useState('');
+  const [topics, setTopics] = useState([]);
+  const [facebookCompanyProfile, setfacebookCompanyProfile] = useState('');
+  const [linkedInCompanyProfile, setLinkedInCompanyProfile] = useState('');
+  const [twitterCompanyProfile, setTwitterCompanyProfile] = useState('');
+  const [companyWebsite, setCompanyWebsite] = useState('');
+  const [certificationArray, setCertificationArray] = useState([
+    { certification: '' },
+  ]);
+  const [teamArray, setTeamArray] = useState([
+    { firstNameTeam: '', lastNameTeam: '', jobTitleTeam: '' },
+  ]);
 
   useEffect(() => {
     if (user) {
@@ -46,6 +61,46 @@ const Overview = () => {
       });
   };
 
+  const onAddCertification = () => {
+    const tempcertification = [...certificationArray];
+    tempcertification.push({ certification: '' });
+    setCertificationArray(tempcertification);
+  };
+
+  const onDeleteCertification = index => {
+    if (index > 0) {
+      const tempCertification = [...certificationArray];
+      const afterdelete = tempCertification.filter((item, i) => index !== i);
+      setCertificationArray(afterdelete);
+    }
+  };
+
+  const onChangeCertificateArray = (value, index) => {
+    const tempcertification = [...certificationArray];
+    tempcertification[index].certification = value;
+    setCertificationArray(tempcertification);
+  };
+
+  const onAddTeamMember = () => {
+    const tempTeam = [...teamArray];
+    tempTeam.push({ firstNameTeam: '', lastNameTeam: '', jobTitleTeam: '' });
+    setTeamArray(tempTeam);
+  };
+
+  const onDeleteTeamMember = index => {
+    if (index > 0) {
+      const tempTeam = [...teamArray];
+      const afterdelete = tempTeam.filter((item, i) => index !== i);
+      setTeamArray(afterdelete);
+    }
+  };
+
+  const onChangeTeamDetails = (value, index, target) => {
+    const tempTeam = [...teamArray];
+    tempTeam[index][target] = value;
+    setTeamArray(tempTeam);
+  };
+
   return (
     <Protected>
       <FacilitatorProgres facilitatorDetails={facilitatorDetails} />
@@ -59,7 +114,7 @@ const Overview = () => {
           <Box width="full" pt="1rem" px={{ md: '2rem' }}>
             <InputField
               value={companyName}
-              label="Company Name"
+              label={'Company Name'}
               type="text"
               height="3rem"
               placeholder="Company name"
@@ -133,7 +188,184 @@ const Overview = () => {
           />
         </Box>
         <Box width="full" pt="1rem" px={{ md: '2rem' }}>
-          <CustomMultiSelect />
+          <FormLabel fontWeight="bold">Topics</FormLabel>
+          <CustomMultiSelect value={topics} onChange={val => setTopics(val)} />
+        </Box>
+
+        <CustomHeading value="Certifications" />
+        <Box width="full" pt="1rem" px={{ md: '2rem' }}>
+          {certificationArray && certificationArray.length > 0
+            ? certificationArray.map((cert, i) => {
+                return (
+                  <Box key={i} display="flex">
+                    <InputField
+                      onChange={e =>
+                        onChangeCertificateArray(e.target.value, i)
+                      }
+                      label={i < 1 ? 'Certifications and qualifications' : ''}
+                      value={cert?.certification}
+                      type="text"
+                      height="3rem"
+                      placeholder="Enter certification"
+                    />
+                    {i > 0 && (
+                      <Box pt="1rem">
+                        <Icon
+                          onClick={() => onDeleteCertification(i)}
+                          color="red"
+                          cursor="pointer"
+                          as={MdDelete}
+                          w={6}
+                          h={6}
+                        />
+                      </Box>
+                    )}
+                  </Box>
+                );
+              })
+            : ''}
+          <Text
+            onClick={onAddCertification}
+            color="brand.orange"
+            cursor="pointer"
+          >
+            + Add Certification
+          </Text>
+        </Box>
+        <CustomHeading value="Team members" />
+        {teamArray && teamArray.length > 0
+          ? teamArray.map((member, i) => {
+              return (
+                <Box
+                  key={i}
+                  display={{ md: 'flex' }}
+                  justifyContent="space-between"
+                >
+                  <Box width="full" pt="1rem" px={{ md: '2rem' }}>
+                    <InputField
+                      value={member.firstNameTeam}
+                      label={i < 1 ? 'First Name' : ''}
+                      type="text"
+                      height="3rem"
+                      placeholder="Last name"
+                      onChange={e =>
+                        onChangeTeamDetails(e.target.value, i, 'firstNameTeam')
+                      }
+                    />
+                  </Box>
+                  <Box width="full" pt="1rem" px={{ md: '2rem' }}>
+                    <InputField
+                      value={member.lastNameTeam}
+                      label={i < 1 ? 'Last Name' : ''}
+                      type="text"
+                      height="3rem"
+                      placeholder="Last name"
+                      onChange={e =>
+                        onChangeTeamDetails(e.target.value, i, 'lastNameTeam')
+                      }
+                    />
+                  </Box>
+                  <Box width="full" pt="1rem" px={{ md: '2rem' }}>
+                    <InputField
+                      value={member.jobTitleTeam}
+                      label={i < 1 ? 'Job Title' : ''}
+                      type="text"
+                      height="3rem"
+                      placeholder="Job title"
+                      onChange={e =>
+                        onChangeTeamDetails(e.target.value, i, 'jobTitleTeam')
+                      }
+                    />
+                  </Box>
+
+                  <Box pt="2rem">
+                    <Icon
+                      onClick={() => onDeleteTeamMember(i)}
+                      color="red"
+                      display={i < 1 ? 'none' : ''}
+                      cursor="pointer"
+                      as={MdDelete}
+                      w={6}
+                      h={6}
+                    />
+                  </Box>
+                </Box>
+              );
+            })
+          : ''}
+        <Text
+          onClick={onAddTeamMember}
+          px={{ md: '2rem' }}
+          color="brand.orange"
+          cursor="pointer"
+        >
+          + Add Team Member
+        </Text>
+
+        <CustomHeading value="Social media and internet" />
+        <Box width="full" pt="1rem" px={{ md: '2rem' }}>
+          <InputField
+            value={companyWebsite}
+            label="Company Website"
+            type="text"
+            height="3rem"
+            placeholder="https://"
+            required
+            onChange={e => setCompanyWebsite(e.target.value)}
+          />
+        </Box>
+        <Box display={{ md: 'flex' }} justifyContent="space-between">
+          <Box width="full" pt="1rem" px={{ md: '2rem' }}>
+            <InputField
+              value={facebookCompanyProfile}
+              label="Facebook profile"
+              type="text"
+              height="3rem"
+              placeholder="Facebook"
+              onChange={e => setfacebookCompanyProfile(e.target.value)}
+            />
+          </Box>
+          <Box width="full" pt="1rem" px={{ md: '2rem' }}>
+            <InputField
+              value={twitterCompanyProfile}
+              label="Twitter Profile"
+              type="text"
+              height="3rem"
+              placeholder="Twitter"
+              onChange={e => setTwitterCompanyProfile(e.target.value)}
+            />
+          </Box>
+          <Box width="full" pt="1rem" px={{ md: '2rem' }}>
+            <InputField
+              value={linkedInCompanyProfile}
+              label="LinkedIn Profile"
+              type="text"
+              height="3rem"
+              placeholder="LinkedIn"
+              onChange={e => setLinkedInCompanyProfile(e.target.value)}
+            />
+          </Box>
+        </Box>
+        <Divider
+          mt="2rem"
+          borderColor="brand.orange"
+          orientation="horizontal"
+        />
+        <Box d="flex" justifyContent="end">
+          <Button
+            borderRadius="lg"
+            color="white"
+            bgColor="brand.orange"
+            width="15rem"
+            _hover={{
+              bgColor: 'brand.gray',
+            }}
+            type="submit"
+            mt="2rem"
+            rightIcon={<MdArrowForward />}
+          >
+            Next
+          </Button>
         </Box>
       </Box>
     </Protected>

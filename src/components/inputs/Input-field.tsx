@@ -39,6 +39,7 @@ const InputField: React.FC<Iprops> = ({
           value={value}
           height={height}
           width="100%"
+          bgColor="#f1f1f6"
           onChange={onChange}
           type={!showPassword ? type : 'text'}
           placeholder={placeholder}
