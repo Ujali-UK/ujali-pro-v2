@@ -32,6 +32,7 @@ const CustomTextArea: React.FC<Iprops> = ({
           width="100%"
           onChange={onChange}
           size="lg"
+          rows={4}
           colorScheme="brand.orange"
           placeholder={placeholder}
         />

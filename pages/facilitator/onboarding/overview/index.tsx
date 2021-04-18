@@ -3,6 +3,7 @@ import { FormLabel } from '@chakra-ui/form-control';
 import Icon from '@chakra-ui/icon';
 import { Box, Divider, Text } from '@chakra-ui/layout';
 import { useToast } from '@chakra-ui/toast';
+import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { MdArrowForward, MdDelete } from 'react-icons/md';
 import CustomHeading from '../../../../src/components/common/custom-heading';
@@ -18,6 +19,7 @@ import { database, firebase } from '../../../../src/utils/firbase-config';
 const Overview = () => {
   const { user } = useAuth();
   const toast = useToast();
+  const router = useRouter();
   const [saving, setSaving] = useState(false);
   const [facilitatorDetails, setFacilitatorDetails] = useState<any>({});
   const [coverImage, setCoverImage] = useState('');
@@ -82,6 +84,7 @@ const Overview = () => {
           duration: 4000,
           isClosable: true,
         });
+        router.push('/facilitator/onboarding/rates');
       })
       .then(() => {
         setSaving(false);
@@ -109,7 +112,6 @@ const Overview = () => {
         snapshot.docs.forEach(doc => {
           setFacilitatorDetails(doc.data());
           const data = doc.data();
-          console.log('fetched facilitator data', data);
           setAboutFacilitator(
             data.aboutFacilitator ? data.aboutFacilitator : ''
           );
