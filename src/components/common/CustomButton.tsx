@@ -3,7 +3,7 @@ import React from 'react';
 import { MdArrowBack, MdArrowForward } from 'react-icons/md';
 
 interface Iprops {
-  saving?: true;
+  saving?: true | false;
   type: 'button' | 'submit';
   label: string;
   direction?: 'next' | 'previous';
@@ -37,7 +37,7 @@ const CustomButton: React.FC<Iprops> = ({
       rightIcon={direction === 'next' && <MdArrowForward />}
       leftIcon={direction === 'previous' && <MdArrowBack />}
     >
-      {saving ? 'Saving...' : label}
+      {label}
     </Button>
   );
 };

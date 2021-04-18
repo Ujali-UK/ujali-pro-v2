@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
+import { useToast } from '@chakra-ui/toast';
 import Protected from '../../../../src/layout/Protected';
 import { useAuth } from '../../../../src/providers/auth-provider/Auth-provider';
-import { database } from '../../../../src/utils/firbase-config';
+import { database, firebase } from '../../../../src/utils/firbase-config';
 import FacilitatorProgres from '../../../../src/components/navbar/Facilitator-progress-nav';
 import { Box, Text } from '@chakra-ui/layout';
 import PageLoader from '../../../../src/components/loaders/PageLoader';
@@ -17,6 +18,8 @@ import CustomNumberInputField from '../../../../src/components/inputs/NumberInpu
 const Rates = () => {
   const { user } = useAuth();
   const router = useRouter();
+  const toast = useToast();
+  const [saving, setSaving] = useState(false);
   const [facilitatorDetails, setFacilitatorDetails] = useState<any>({});
   const [loading, setLoading] = useState(false);
   const [dailyRate, setDailyRate] = useState();
@@ -45,6 +48,21 @@ const Rates = () => {
         snapshot.docs.forEach(doc => {
           setFacilitatorDetails(doc.data());
           const data = doc.data();
+          setDailyRate(data.dailyRate ? data.dailyRate : 0);
+          setWeeklyRate(data.weeklyRate ? data.weeklyRate : 0);
+          setTravelRequirements(
+            data.travelRequirements ? data.travelRequirements : ''
+          );
+          setSpecialRequirements(
+            data.specialRequirements
+              ? data.specialRequirements
+              : [{ requirements: '' }]
+          );
+          setSortCode(data.sortCode ? data.sortCode : '');
+          setAccountNumber(data.accountNumber ? data.accountNumber : '');
+          setAccountHolderName(
+            data.accountHolderName ? data.accountHolderName : ''
+          );
           if (!data.overview && data.overview === true) {
             router.replace('/facilitator/onboarding/overview');
           }
@@ -59,6 +77,7 @@ const Rates = () => {
 
   const onSaveViews = async e => {
     e.preventDefault();
+    setSaving(true);
     const details = {
       dailyRate,
       weeklyRate,
@@ -67,8 +86,39 @@ const Rates = () => {
       sortCode,
       accountNumber,
       accountHolderName,
+      ratesAndRequirements: true,
     };
-    return details;
+    database
+      .collection('facilitators')
+      .doc(facilitatorDetails?.id)
+      .update({
+        ...details,
+        updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+      })
+      .then(() => {
+        toast({
+          title: 'Facilitator overview updated successfully.',
+          status: 'success',
+          duration: 4000,
+          isClosable: true,
+        });
+        // router.push('/facilitator/onboarding/rates');
+      })
+      .then(() => {
+        setSaving(false);
+        getFacilitatorDetails();
+      })
+      .catch(error => {
+        if (error) {
+          toast({
+            title: 'Facilitator details could not be updated.',
+            status: 'error',
+            duration: 4000,
+            isClosable: true,
+          });
+        }
+        setSaving(false);
+      });
   };
 
   const onAddSpecialRequirements = () => {
@@ -221,7 +271,12 @@ const Rates = () => {
                 label="Previous"
                 type="button"
               />
-              <CustomButton direction="next" label="Next" type="submit" />
+              <CustomButton
+                direction="next"
+                label={saving ? 'Saving...' : 'Next'}
+                saving={saving}
+                type="submit"
+              />
             </Box>
           </form>
         </Box>
