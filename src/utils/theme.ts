@@ -14,7 +14,7 @@ export const customTheme = extendTheme({
         color: '#707070',
       },
       a: {
-        color: '#FF9717',
+        textDecoration: 'none',
       },
     },
   },

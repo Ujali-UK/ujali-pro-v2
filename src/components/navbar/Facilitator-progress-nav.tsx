@@ -1,4 +1,5 @@
 import { Box } from '@chakra-ui/layout';
+import Link from 'next/link';
 import React from 'react';
 import styled from 'styled-components';
 
@@ -18,7 +19,7 @@ const FacilitatorProgres: React.FC<Iprops> = ({ facilitatorDetails }) => {
           }
         >
           <span />
-          Overview
+          <Link href="/facilitator/onboarding/overview"> Overview</Link>
         </li>
         <li
           className={
@@ -27,7 +28,11 @@ const FacilitatorProgres: React.FC<Iprops> = ({ facilitatorDetails }) => {
               : 'progress-tab'
           }
         >
-          <span /> Rates & Requirements
+          <span />
+          <Link href="/facilitator/onboarding/rates">
+            {' '}
+            Rates & Requirements
+          </Link>
         </li>
         <li
           className={
@@ -36,7 +41,11 @@ const FacilitatorProgres: React.FC<Iprops> = ({ facilitatorDetails }) => {
               : 'progress-tab'
           }
         >
-          <span /> Delivery style
+          <span />
+          <Link href="/facilitator/onboarding/delivery-style">
+            {' '}
+            Delivery style
+          </Link>
         </li>
         <li
           className={
@@ -45,7 +54,10 @@ const FacilitatorProgres: React.FC<Iprops> = ({ facilitatorDetails }) => {
               : 'progress-tab'
           }
         >
-          <span /> Values & Interests
+          <span />{' '}
+          <Link href="/facilitator/onboarding/interests">
+            Values & Interests
+          </Link>
         </li>
         <li
           className={
@@ -54,7 +66,10 @@ const FacilitatorProgres: React.FC<Iprops> = ({ facilitatorDetails }) => {
               : 'progress-tab'
           }
         >
-          <span /> Workshops & Events
+          <span />{' '}
+          <Link href="/facilitator/onboarding/workshops">
+            Workshops & Events
+          </Link>
         </li>
       </StyledList>
     </Box>

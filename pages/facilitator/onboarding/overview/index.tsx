@@ -84,11 +84,11 @@ const Overview = () => {
           duration: 4000,
           isClosable: true,
         });
-        router.push('/facilitator/onboarding/rates');
       })
       .then(() => {
         setSaving(false);
-        getFacilitatorDetails();
+        router.push('/facilitator/onboarding/rates');
+        // getFacilitatorDetails();
       })
       .catch(error => {
         if (error) {

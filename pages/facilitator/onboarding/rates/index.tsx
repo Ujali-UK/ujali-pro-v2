@@ -63,7 +63,7 @@ const Rates = () => {
           setAccountHolderName(
             data.accountHolderName ? data.accountHolderName : ''
           );
-          if (!data.overview && data.overview === true) {
+          if (!data.overview && !data.overview === true) {
             router.replace('/facilitator/onboarding/overview');
           }
           setLoading(false);
@@ -97,16 +97,16 @@ const Rates = () => {
       })
       .then(() => {
         toast({
-          title: 'Facilitator overview updated successfully.',
+          title: 'Facilitator rates updated successfully.',
           status: 'success',
           duration: 4000,
           isClosable: true,
         });
-        // router.push('/facilitator/onboarding/rates');
       })
       .then(() => {
         setSaving(false);
-        getFacilitatorDetails();
+        router.push('/facilitator/onboarding/delivery-style');
+        // getFacilitatorDetails();
       })
       .catch(error => {
         if (error) {
@@ -269,6 +269,7 @@ const Rates = () => {
               <CustomButton
                 direction="previous"
                 label="Previous"
+                onClick={() => router.push('/facilitator/onboarding/overview')}
                 type="button"
               />
               <CustomButton
