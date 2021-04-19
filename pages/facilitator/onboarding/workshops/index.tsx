@@ -14,6 +14,7 @@ import { useToast } from '@chakra-ui/toast';
 import { useRouter } from 'next/router';
 import React, { useState, useEffect } from 'react';
 import CustomHeading from '../../../../src/components/common/custom-heading';
+import CustomButton from '../../../../src/components/common/CustomButton';
 import Eventform from '../../../../src/components/event-form/Eventform';
 import PageLoader from '../../../../src/components/loaders/PageLoader';
 import FacilitatorProgres from '../../../../src/components/navbar/Facilitator-progress-nav';
@@ -87,6 +88,38 @@ const Workshops = () => {
       });
   };
 
+  const onCompleteProfile = async e => {
+    e.preventDefault();
+    setSaving(true);
+    database
+      .collection('facilitators')
+      .doc(facilitatorDetails?.id)
+      .update({
+        workshopAndEvents: true,
+      })
+      .then(() => {
+        toast({
+          title: 'Facilitator profile completed successfully.',
+          status: 'success',
+          duration: 4000,
+          isClosable: true,
+        });
+        setSaving(false);
+        getFacilitatorDetails();
+      })
+      .catch(error => {
+        if (error) {
+          toast({
+            title: 'Updating profile failed.',
+            status: 'error',
+            duration: 4000,
+            isClosable: true,
+          });
+        }
+        setSaving(false);
+      });
+  };
+
   const getFacilitatorDetails = async () => {
     await database
       .collection('facilitators')
@@ -94,25 +127,13 @@ const Workshops = () => {
       .get()
       .then(async snapshot => {
         snapshot.docs.forEach(doc => {
-          setFacilitatorDetails(doc.data());
           const data = doc.data();
+          setFacilitatorDetails(data);
           if (!data.deliveryStyle && !data.deliveryStyle === true) {
             router.replace('/facilitator/onboarding/interests');
           }
           setLoading(false);
         });
-        await database
-          .collection(`facilitator/${facilitatorDetails.id}/event`)
-          .where('ownerUID', '==', user.uid)
-          .get()
-          .then(data => {
-            data.docs.forEach(doc => {
-              console.log('check event', doc.data());
-            });
-          })
-          .catch(error => {
-            console.log('error', error);
-          });
       })
       .catch(error => {
         setLoading(false);
@@ -122,45 +143,69 @@ const Workshops = () => {
 
   return (
     <Protected>
-      <FacilitatorProgres facilitatorDetails={facilitatorDetails} />
-      {!loading ? (
-        <Box px={{ base: '1rem', md: '6rem' }} pb="5rem" overflowY="auto">
-          <Box>
-            <CustomHeading value="Your Events/Workshops" />
-            <Text px={{ md: '2rem' }}>
-              Create your events for companies and agencies to participate
-            </Text>
-            <Box px={{ md: '2rem' }} pt={{ base: '1rem', md: '2rem' }}>
-              <Button
-                onClick={onOpen}
-                type="button"
-                color="white"
-                bgColor="brand.orange"
-              >
-                Create new event
-              </Button>
-            </Box>
-            <Box></Box>
-            <Modal size="xl" isOpen={isOpen} onClose={onClose}>
-              <ModalOverlay />
-              <ModalContent>
-                <ModalHeader>Add New Event</ModalHeader>
-                <ModalCloseButton />
-                <ModalBody>
-                  <Eventform onSaveEvent={onSaveEvent} saving={saving} />
-                </ModalBody>
-                <ModalFooter
-                  display="flex"
+      <Box>
+        <FacilitatorProgres facilitatorDetails={facilitatorDetails} />
+        {!loading ? (
+          <Box px={{ base: '1rem', md: '6rem' }} pb="5rem" overflowY="auto">
+            <Box>
+              <CustomHeading value="Your Events/Workshops" />
+              <Text px={{ md: '2rem' }}>
+                Create your events for companies and agencies to participate
+              </Text>
+              <Box px={{ md: '2rem' }} pt={{ base: '1rem', md: '2rem' }}>
+                <Button
+                  onClick={onOpen}
+                  type="button"
+                  color="white"
+                  bgColor="brand.orange"
+                >
+                  Create new event
+                </Button>
+              </Box>
+              <Modal size="xl" isOpen={isOpen} onClose={onClose}>
+                <ModalOverlay />
+                <ModalContent>
+                  <ModalHeader>Add New Event</ModalHeader>
+                  <ModalCloseButton />
+                  <ModalBody>
+                    <Eventform onSaveEvent={onSaveEvent} saving={saving} />
+                  </ModalBody>
+                  <ModalFooter
+                    display="flex"
+                    justifyContent="space-between"
+                    mx="1rem"
+                  ></ModalFooter>
+                </ModalContent>
+              </Modal>
+              <form onSubmit={e => onCompleteProfile(e)}>
+                <Box
+                  display={{ md: 'flex' }}
                   justifyContent="space-between"
-                  mx="1rem"
-                ></ModalFooter>
-              </ModalContent>
-            </Modal>
+                  px={{ md: '2rem' }}
+                  pt={{ md: '17rem' }}
+                >
+                  <CustomButton
+                    direction="previous"
+                    label="Previous"
+                    onClick={() =>
+                      router.push('/facilitator/onboarding/interests')
+                    }
+                    type="button"
+                  />
+                  <CustomButton
+                    direction="next"
+                    label={saving ? 'Saving...' : 'Complete profile'}
+                    saving={saving}
+                    type="submit"
+                  />
+                </Box>
+              </form>
+            </Box>
           </Box>
-        </Box>
-      ) : (
-        <PageLoader />
-      )}
+        ) : (
+          <PageLoader />
+        )}
+      </Box>
     </Protected>
   );
 };

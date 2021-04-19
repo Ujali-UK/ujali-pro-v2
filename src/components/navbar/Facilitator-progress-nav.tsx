@@ -29,10 +29,7 @@ const FacilitatorProgres: React.FC<Iprops> = ({ facilitatorDetails }) => {
           }
         >
           <span />
-          <Link href="/facilitator/onboarding/rates">
-            {' '}
-            Rates & Requirements
-          </Link>
+          <Link href="/facilitator/onboarding/rates">Rates & Requirements</Link>
         </li>
         <li
           className={
@@ -43,7 +40,6 @@ const FacilitatorProgres: React.FC<Iprops> = ({ facilitatorDetails }) => {
         >
           <span />
           <Link href="/facilitator/onboarding/delivery-style">
-            {' '}
             Delivery style
           </Link>
         </li>
@@ -61,7 +57,7 @@ const FacilitatorProgres: React.FC<Iprops> = ({ facilitatorDetails }) => {
         </li>
         <li
           className={
-            facilitatorDetails?.workshopsAndEvents === true
+            facilitatorDetails?.workshopAndEvents === true
               ? 'progress-tab done'
               : 'progress-tab'
           }

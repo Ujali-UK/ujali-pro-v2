@@ -1,7 +1,7 @@
 export const topicOptions = [
   {
-    label: 'Targetting and positioning',
-    value: 'Targetting and positioning',
+    label: 'Targeting and positioning',
+    value: 'Targeting and positioning',
   },
   {
     label: 'Market intelligence and research',
