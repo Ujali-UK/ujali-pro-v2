@@ -45,7 +45,15 @@ const Home = ({ router }) => {
   };
 
   return (
-    <Box>{loading ? <PageLoader /> : <Protected> logged in</Protected>}</Box>
+    <Box>
+      {loading ? (
+        <PageLoader />
+      ) : (
+        <Protected>
+          <PageLoader />
+        </Protected>
+      )}
+    </Box>
   );
 };
 
