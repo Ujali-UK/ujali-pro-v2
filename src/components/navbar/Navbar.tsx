@@ -30,10 +30,13 @@ const Navbar: FC = () => {
         <Box>
           <Image
             mt="2"
-            src={user.photoUrl ? user.photoUrl : 'https://bit.ly/sage-adebayo'}
+            src={
+              user.photoUrl
+                ? user.photoUrl
+                : 'https://res.cloudinary.com/w3bh4ck/image/upload/v1585801837/person-placeholder.jpg'
+            }
             height="3rem"
             width="3rem"
-            alt="ac"
             borderRadius="full"
           />
         </Box>

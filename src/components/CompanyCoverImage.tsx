@@ -7,7 +7,7 @@ import { firebase } from '../utils/firbase-config';
 
 interface Iprops {
   coverImage: string | null;
-  getFacilitatorDetails: () => void;
+  getCompanyDetails: () => void;
   accountType?: string;
 }
 
@@ -15,9 +15,9 @@ interface Iprops {
  * @description: change cover image
  * @returns Cover image component
  */
-const CoverImage: React.FC<Iprops> = ({
+const CompanyCoverImage: React.FC<Iprops> = ({
   coverImage,
-  getFacilitatorDetails,
+  getCompanyDetails,
 }) => {
   const { user, userInfo } = useAuth();
   const [loading, setLoading] = useState(false);
@@ -31,29 +31,30 @@ const CoverImage: React.FC<Iprops> = ({
     childFolder.put(file).then(snapshot => {
       snapshot.ref.getDownloadURL().then(async url => {
         if (
-          (userInfo && userInfo.accountType === 'facilitator') ||
-          userInfo.accountType === 'Facilitator'
+          (userInfo && userInfo.accountType === 'Company') ||
+          userInfo.accountType === 'company'
         ) {
           const db = await firebase.firestore();
           await db
-            .collection('facilitators')
+            .collection('companies')
             .where('userUIDS', 'array-contains', userInfo.uid)
             .get()
             .then(snapshot => {
               snapshot.docs.forEach(doc => {
-                db.collection('facilitators')
+                db.collection('companies')
                   .doc(doc.data().id)
                   .update({
                     coverImage: url,
                   })
                   .then(() => {
-                    getFacilitatorDetails();
+                    getCompanyDetails();
                     toast({
                       title: 'Cover image uploaded successfully.',
                       status: 'success',
                       duration: 4000,
                       isClosable: true,
                     });
+                    setLoading(false);
                   })
                   .finally(() => {
                     setLoading(false);
@@ -94,7 +95,7 @@ const CoverImage: React.FC<Iprops> = ({
   );
 };
 
-export default CoverImage;
+export default CompanyCoverImage;
 
 const StyledImageButton = styled.label`
   position: relative;

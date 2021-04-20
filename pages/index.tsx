@@ -30,10 +30,12 @@ const Home = ({ router }) => {
         });
       })
       .then(() => {
+        setLoading(false);
         if (userResponse?.accountType.toLowerCase() === 'facilitator') {
           router.push('/facilitator/onboarding/overview');
+        } else {
+          router.push('/company/onboarding/overview');
         }
-        setLoading(false);
       })
       .catch(error => {
         setLoading(false);
