@@ -152,7 +152,7 @@ const SignUp = () => {
                   isRequired
                 >
                   <option value="facilitator">Facilitator</option>
-                  <option value="company">Company</option>
+                  <option value="Company">Company</option>
                 </Select>
               </Box>
 

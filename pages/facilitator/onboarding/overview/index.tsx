@@ -84,9 +84,9 @@ const Overview = () => {
           duration: 4000,
           isClosable: true,
         });
+        setSaving(false);
       })
       .then(() => {
-        setSaving(false);
         router.push('/facilitator/onboarding/rates');
         // getFacilitatorDetails();
       })
