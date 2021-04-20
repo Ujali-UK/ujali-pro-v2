@@ -13,6 +13,7 @@ import { FormLabel } from '@chakra-ui/form-control';
 import CustomMultiSelect from '../../../../src/components/common/multi-select';
 import CustomButton from '../../../../src/components/common/CustomButton';
 import CompanyCoverImage from '../../../../src/components/CompanyCoverImage';
+import CompanyTabs from '../../../../src/components/company-tabs/CompanyTabs';
 
 const CompanyOverview = () => {
   const { user } = useAuth();
@@ -20,7 +21,7 @@ const CompanyOverview = () => {
   const router = useRouter();
   const [coverImage, setCoverImage] = useState('');
   const [saving, setSaving] = useState(false);
-  const [companydetails, setCompanyDetails] = useState<any>({});
+  const [companyDetails, setCompanyDetails] = useState<any>({});
   const [companyName, setCompanyName] = useState('');
   const [companyRegistrationNumber, setCompanyRegistrationNumber] = useState(
     ''
@@ -37,7 +38,6 @@ const CompanyOverview = () => {
 
   useEffect(() => {
     if (user) {
-      console.log(router.pathname);
       getCompanyDetails();
     }
   }, [user]);
@@ -58,11 +58,12 @@ const CompanyOverview = () => {
       linkedInCompanyProfile,
       twitterCompanyProfile,
       updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+      companyOverview: true,
     };
 
     database
       .collection('companies')
-      .doc(companydetails?.id)
+      .doc(companyDetails?.id)
       .update({
         ...details,
         updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
@@ -77,7 +78,7 @@ const CompanyOverview = () => {
         setSaving(false);
       })
       .then(() => {
-        // router.push('/company/onboarding/gigs');
+        router.push('/company/onboarding/gigs');
         // getFacilitatorDetails();
       })
       .catch(error => {
@@ -127,41 +128,7 @@ const CompanyOverview = () => {
 
   return (
     <Protected>
-      <Box height="4rem" bgColor="brand.gray" width="100%">
-        <Box
-          display="flex"
-          justifyContent="center"
-          color="white"
-          pt="1.5rem"
-          fontWeight="bold"
-          textTransform="uppercase"
-        >
-          <Box
-            mr="2rem"
-            cursor="pointer"
-            width="6rem"
-            textAlign="center"
-            borderBottom={
-              router.pathname.includes('overview') ? '4px solid orange' : ''
-            }
-            pb="0.5rem"
-          >
-            Overview
-          </Box>
-          <Box
-            ml="2rem"
-            cursor="pointer"
-            width="6rem"
-            textAlign="center"
-            borderBottom={
-              router.pathname.includes('gigs') ? '4px solid orange' : ''
-            }
-            pb="0.5rem"
-          >
-            Gigs
-          </Box>
-        </Box>
-      </Box>
+      <CompanyTabs route={router.pathname} />
       <CompanyCoverImage
         coverImage={coverImage}
         getCompanyDetails={getCompanyDetails}
