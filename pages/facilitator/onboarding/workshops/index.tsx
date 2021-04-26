@@ -105,7 +105,8 @@ const Workshops = () => {
           isClosable: true,
         });
         setSaving(false);
-        getFacilitatorDetails();
+        // getFacilitatorDetails();
+        router.push('/hub');
       })
       .catch(error => {
         if (error) {
