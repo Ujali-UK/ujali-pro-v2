@@ -29,13 +29,14 @@ const Workshops = () => {
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
   const [facilitatorDetails, setFacilitatorDetails] = useState<any>({});
-  // const [workshops, setWorkshops] = useState([])
+  const [facilitatorEvents, setFacilitatorEvents] = useState([]);
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   useEffect(() => {
     setLoading(true);
     if (user) {
       getFacilitatorDetails();
+      getAllEvents();
     }
   }, [user]);
 
@@ -106,7 +107,7 @@ const Workshops = () => {
         });
         setSaving(false);
         // getFacilitatorDetails();
-        router.push('/hub');
+        router.push('/facilitator/hub');
       })
       .catch(error => {
         if (error) {
@@ -142,6 +143,32 @@ const Workshops = () => {
       });
   };
 
+  const getAllEvents = async () => {
+    database
+      .collection('facilitators')
+      .where('ownerUID', '==', user.uid)
+      .get()
+      .then(async snapshot => {
+        snapshot.docs.forEach(async doc => {
+          const data = doc.data();
+          const allevents = [];
+          await database
+            .collection('facilitators')
+            .doc(data.id)
+            .collection('event')
+            .get()
+            .then(async querySnapShot => {
+              querySnapShot.docs.forEach(event => {
+                const eventData = event.data();
+                allevents.push(eventData);
+              });
+              setFacilitatorEvents(allevents);
+              console.log('event data', allevents);
+            });
+        });
+      });
+  };
+
   return (
     <Protected>
       <Box>
@@ -163,6 +190,12 @@ const Workshops = () => {
                   Create new event
                 </Button>
               </Box>
+              <Box>
+                {facilitatorEvents.map((event, i) => {
+                  return <Box key={i}>{event.name}</Box>;
+                })}
+              </Box>
+
               <Modal size="xl" isOpen={isOpen} onClose={onClose}>
                 <ModalOverlay />
                 <ModalContent>
