@@ -1,6 +1,6 @@
 import { Box } from '@chakra-ui/layout';
 import React from 'react';
-import Protected from '../../src/layout/Protected';
+import Protected from '../../../src/layout/Protected';
 
 const Hub = () => {
   return (
