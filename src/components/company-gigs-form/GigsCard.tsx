@@ -14,37 +14,37 @@ import {
 import { format } from 'date-fns/esm';
 import React, { useState } from 'react';
 import { useToast } from '@chakra-ui/react';
-import { MdDateRange, MdDelete, MdTimer } from 'react-icons/md';
+import { MdDelete } from 'react-icons/md';
 import { database } from '../../utils/firbase-config';
 import { nameShortner } from '../../utils/helpers';
 
-const EventCard = ({ event, getAllEvents, facilitatorDetails }) => {
+const GigsCard = ({ gig, companyDetails, getAllGigs }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [deleting, setDeleting] = useState(false);
   const toast = useToast();
 
-  const onDeleteEvent = async id => {
+  const onDeleteGig = async id => {
     setDeleting(true);
     database
-      .collection('facilitators')
-      .doc(facilitatorDetails?.id)
-      .collection('event')
+      .collection('companies')
+      .doc(companyDetails?.id)
+      .collection('gigs')
       .doc(id)
       .delete()
       .then(() => {
         setDeleting(false);
         toast({
-          title: 'Event deleted successfully.',
+          title: 'Gig deleted successfully.',
           status: 'success',
           duration: 4000,
           isClosable: true,
         });
         onClose();
-        getAllEvents();
+        getAllGigs();
       })
       .catch(error => {
         toast({
-          title: 'Error deleting event.',
+          title: 'Error deleting Gig.',
           status: 'error',
           duration: 4000,
           isClosable: true,
@@ -65,8 +65,8 @@ const EventCard = ({ event, getAllEvents, facilitatorDetails }) => {
         width="100%"
         height="8rem"
         backgroundImage={
-          event.coverImage && event.coverImage?.length > 0
-            ? `url(${event?.coverImage})`
+          gig.coverImage && gig.coverImage?.length > 0
+            ? `url(${gig?.coverImage})`
             : 'url(https://res.cloudinary.com/w3bh4ck/image/upload/v1617668753/ujali/ujali-pro/facilitators-cover-image.jpg)'
         }
         backgroundRepeat="no-repeat"
@@ -75,33 +75,38 @@ const EventCard = ({ event, getAllEvents, facilitatorDetails }) => {
       ></Box>
       <Box px="0.5rem" pb="2rem">
         <Text fontSize="lg" textTransform="capitalize" fontWeight="bold">
-          {nameShortner(event.eventName, 30)}
+          {nameShortner(gig?.gigName, 30)}
         </Text>
         <Text mt="-0.5" fontSize="sm" color="brand.orange">
-          {event?.pricePerPerson}£ per person ({event?.spacesAvailable} spaces
-          available){' '}
+          {gig?.minimumPricePerPerson}£ per person ({gig?.employeesNumber}{' '}
+          spaces available){' '}
         </Text>
-        <Text fontSize="md">{event.eventDescription}</Text>
+        <Text fontSize="md">description</Text>
         <Divider pt="4" orientation="horizontal" />
         <Text>
           <span style={{ fontWeight: 'bold' }}>Location:</span>{' '}
-          {event.eventLocation}
+          {gig?.eventLocation}
         </Text>
         <Box d="flex" justifyContent="space-between" pt="1rem">
-          <Box d="flex">
-            <Icon color="brand.orange" as={MdDateRange} w={8} h={8} />{' '}
+          <Box>
+            {/* <Icon color="brand.orange" as={MdDateRange} w={8} h={8} />{' '} */}
+            <Text fontWeight="bold">Start Date:</Text>
             <Text pt="0.2rem">
               {format(
-                event.eventDateStart
-                  ? new Date(event.eventDateStart)
-                  : new Date(),
+                gig?.eventDateStart ? new Date(gig.fromDate) : new Date(),
                 'Lo LLL, yyyy'
               )}
             </Text>
           </Box>
-          <Box d="flex">
-            <Icon color="brand.orange" as={MdTimer} w={8} h={8} />{' '}
-            <Text pt="0.2rem">{event?.eventTimeStart}</Text>
+          <Box>
+            {/* <Icon color="brand.orange" as={MdDateRange} w={8} h={8} />{' '} */}
+            <Text fontWeight="bold">End Date:</Text>
+            <Text>
+              {format(
+                gig?.toDate ? new Date(gig.toDate) : new Date(),
+                'Lo LLL, yyyy'
+              )}
+            </Text>
           </Box>
         </Box>
       </Box>
@@ -118,11 +123,11 @@ const EventCard = ({ event, getAllEvents, facilitatorDetails }) => {
         <Modal isOpen={isOpen} onClose={onClose}>
           <ModalOverlay />
           <ModalContent>
-            <ModalHeader>Delete Event</ModalHeader>
+            <ModalHeader>Delete Gig</ModalHeader>
             <ModalCloseButton />
             <ModalBody>
-              You are about to delete an event, are you sure you want to delete{' '}
-              <span style={{ color: 'red' }}>{event?.eventName}</span>
+              You are about to delete a gig, are you sure you want to delete{' '}
+              <span style={{ color: 'red' }}>{gig?.gigName}</span>
             </ModalBody>
             <ModalFooter>
               <Button colorScheme="gray" mr={3} onClick={onClose}>
@@ -130,7 +135,7 @@ const EventCard = ({ event, getAllEvents, facilitatorDetails }) => {
               </Button>
               <Button
                 type="button"
-                onClick={() => onDeleteEvent(event?.id)}
+                onClick={() => onDeleteGig(gig?.id)}
                 bg="red"
                 color="white"
               >
@@ -144,4 +149,4 @@ const EventCard = ({ event, getAllEvents, facilitatorDetails }) => {
   );
 };
 
-export default EventCard;
+export default GigsCard;

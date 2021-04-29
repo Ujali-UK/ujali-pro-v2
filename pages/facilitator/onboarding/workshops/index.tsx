@@ -101,7 +101,7 @@ const Workshops = () => {
       .collection('facilitators')
       .doc(facilitatorDetails?.id)
       .update({
-        workshopAndEvents: true,
+        profileCompleted: true,
       })
       .then(() => {
         toast({
@@ -168,7 +168,6 @@ const Workshops = () => {
                 allevents.push(eventData);
               });
               setFacilitatorEvents(allevents);
-              console.log('event data', allevents);
             });
         });
       });
