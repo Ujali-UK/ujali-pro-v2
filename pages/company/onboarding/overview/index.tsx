@@ -270,14 +270,13 @@ const CompanyOverview = () => {
           >
             <CustomButton
               direction="next"
-              label={saving ? 'Saving...' : 'Save'}
+              label={saving ? 'Saving...' : 'Next'}
               saving={saving}
               type="submit"
             />
           </Box>
         </form>
       </Box>
-      This is company overview
     </Protected>
   );
 };

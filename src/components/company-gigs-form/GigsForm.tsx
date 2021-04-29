@@ -1,7 +1,5 @@
 import { Button } from '@chakra-ui/button';
-import { FormLabel } from '@chakra-ui/form-control';
 import { Box } from '@chakra-ui/layout';
-import { Select } from '@chakra-ui/select';
 import React, { useState } from 'react';
 import CustomTextArea from '../inputs/CustomTextArea';
 import InputField from '../inputs/Input-field';
@@ -20,7 +18,6 @@ const GigsForm: React.FC<Iprops> = ({ onSaveGig, saving }) => {
   const [toDate, setToDate] = useState('');
   const [minimumPricePerPerson, setPricePerPerson] = useState(0);
   const [employeesNumber, setSpacesAvailable] = useState(0);
-  const [travelAccommodation, setTravelAccomodation] = useState('');
 
   return (
     <form
@@ -33,7 +30,6 @@ const GigsForm: React.FC<Iprops> = ({ onSaveGig, saving }) => {
           toDate,
           minimumPricePerPerson,
           employeesNumber,
-          travelAccommodation,
         })
       }
     >
@@ -44,12 +40,14 @@ const GigsForm: React.FC<Iprops> = ({ onSaveGig, saving }) => {
           value={gigName}
           height="3rem"
           placeholder="Name"
+          required={true}
           onChange={e => setGigName(e.target.value)}
         />
         <Box pt="1rem">
           <CustomTextArea
             value={gigDescription}
             label="Event description"
+            required={true}
             placeholder="Enter description for your event"
             onChange={e => setGigDescription(e.target.value)}
           />
@@ -58,6 +56,7 @@ const GigsForm: React.FC<Iprops> = ({ onSaveGig, saving }) => {
           <InputField
             label="Event Location"
             type="text"
+            required={true}
             value={eventLocation}
             height="3rem"
             placeholder="E.g: London"
@@ -70,6 +69,7 @@ const GigsForm: React.FC<Iprops> = ({ onSaveGig, saving }) => {
             label="Start Date"
             type="date"
             height="3rem"
+            required={true}
             onChange={e => setFromDate(e.target.value)}
           />
           <Box width="full" pl="1rem">
@@ -77,6 +77,7 @@ const GigsForm: React.FC<Iprops> = ({ onSaveGig, saving }) => {
               value={toDate}
               label="End Date"
               type="date"
+              required={true}
               height="3rem"
               onChange={e => setToDate(e.target.value)}
             />
@@ -101,7 +102,7 @@ const GigsForm: React.FC<Iprops> = ({ onSaveGig, saving }) => {
             />
           </Box>
         </Box>
-        <Box mb="1rem">
+        {/* <Box mb="1rem">
           <FormLabel>Travel and Accommodation</FormLabel>
           <Select
             height="3rem"
@@ -118,7 +119,7 @@ const GigsForm: React.FC<Iprops> = ({ onSaveGig, saving }) => {
               I will arrange Travel & Accommodation
             </option>
           </Select>
-        </Box>
+        </Box> */}
         <Box pt="1rem" display="flex" justifyContent="end">
           <Button type="submit" color="white" bgColor="brand.orange">
             {!saving ? 'Create event' : 'Creating...'}
