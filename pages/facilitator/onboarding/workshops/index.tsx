@@ -199,6 +199,8 @@ const Workshops = () => {
                 <FacilitatorEvents
                   loading={loading}
                   events={facilitatorEvents}
+                  getAllEvents={getAllEvents}
+                  facilitatorDetails={facilitatorDetails}
                 />
               </Box>
 

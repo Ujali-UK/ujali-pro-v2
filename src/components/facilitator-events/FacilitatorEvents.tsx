@@ -20,9 +20,16 @@ type Event = {
 interface Iprops {
   events?: Event[] | undefined;
   loading?: true | false;
+  getAllEvents: () => void;
+  facilitatorDetails: any;
 }
 
-const FacilitatorEvents: React.FC<Iprops> = ({ events, loading }) => {
+const FacilitatorEvents: React.FC<Iprops> = ({
+  events,
+  loading,
+  getAllEvents,
+  facilitatorDetails,
+}) => {
   return (
     <Box>
       <Grid
@@ -31,7 +38,14 @@ const FacilitatorEvents: React.FC<Iprops> = ({ events, loading }) => {
       >
         {events && events.length > 0
           ? events.map((event, i) => {
-              return <EventCard event={event} key={i} />;
+              return (
+                <EventCard
+                  facilitatorDetails={facilitatorDetails}
+                  getAllEvents={getAllEvents}
+                  event={event}
+                  key={i}
+                />
+              );
             })
           : ''}
       </Grid>

@@ -47,6 +47,7 @@ const Eventform: React.FC<Iprops> = ({ onSaveEvent, saving }) => {
           <CustomTextArea
             value={eventDescription}
             label="Event description"
+            required={true}
             placeholder="Enter description for your event"
             onChange={e => setEventDescription(e.target.value)}
           />
@@ -88,6 +89,7 @@ const Eventform: React.FC<Iprops> = ({ onSaveEvent, saving }) => {
             label="Price per person £"
             type="number"
             height="3rem"
+            required={true}
             placeholder="Price"
             onChange={value => setPricePerPerson(value)}
           />
@@ -97,6 +99,7 @@ const Eventform: React.FC<Iprops> = ({ onSaveEvent, saving }) => {
               label="Spaces available"
               type="number"
               height="3rem"
+              required={true}
               onChange={value => setSpacesAvailable(value)}
             />
           </Box>
