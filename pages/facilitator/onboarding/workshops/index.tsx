@@ -16,6 +16,7 @@ import React, { useState, useEffect } from 'react';
 import CustomHeading from '../../../../src/components/common/custom-heading';
 import CustomButton from '../../../../src/components/common/CustomButton';
 import Eventform from '../../../../src/components/event-form/Eventform';
+import FacilitatorEvents from '../../../../src/components/facilitator-events/FacilitatorEvents';
 import PageLoader from '../../../../src/components/loaders/PageLoader';
 import FacilitatorProgres from '../../../../src/components/navbar/Facilitator-progress-nav';
 import Protected from '../../../../src/layout/Protected';
@@ -52,6 +53,9 @@ const Workshops = () => {
         ownerUID: facilitatorDetails?.ownerUID,
         facilitatorId: facilitatorDetails?.id,
         createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+        coverImage: facilitatorDetails.coverImage
+          ? facilitatorDetails.coverImage
+          : '',
       })
       .then(async docRef => {
         database
@@ -74,6 +78,7 @@ const Workshops = () => {
           isClosable: true,
         });
         onClose();
+        getAllEvents();
         setSaving(false);
       })
       .catch(error => {
@@ -190,10 +195,11 @@ const Workshops = () => {
                   Create new event
                 </Button>
               </Box>
-              <Box>
-                {facilitatorEvents.map((event, i) => {
-                  return <Box key={i}>{event.name}</Box>;
-                })}
+              <Box pt={{ base: '2rem', md: '4rem' }}>
+                <FacilitatorEvents
+                  loading={loading}
+                  events={facilitatorEvents}
+                />
               </Box>
 
               <Modal size="xl" isOpen={isOpen} onClose={onClose}>
@@ -216,7 +222,7 @@ const Workshops = () => {
                   display={{ md: 'flex' }}
                   justifyContent="space-between"
                   px={{ md: '2rem' }}
-                  pt={{ md: '17rem' }}
+                  pt={{ md: '12rem' }}
                 >
                   <CustomButton
                     direction="previous"

@@ -36,6 +36,7 @@ const Eventform: React.FC<Iprops> = ({ onSaveEvent, saving }) => {
       <Box>
         <InputField
           label="Event Name"
+          required={true}
           type="text"
           value={eventName}
           height="3rem"
@@ -56,6 +57,7 @@ const Eventform: React.FC<Iprops> = ({ onSaveEvent, saving }) => {
             type="text"
             value={eventLocation}
             height="3rem"
+            required={true}
             placeholder="E.g: London"
             onChange={e => setEventLocation(e.target.value)}
           />
@@ -65,6 +67,7 @@ const Eventform: React.FC<Iprops> = ({ onSaveEvent, saving }) => {
             value={eventDateStart}
             label="Start Date"
             type="date"
+            required={true}
             height="3rem"
             onChange={e => setEventDateStart(e.target.value)}
           />
@@ -73,6 +76,7 @@ const Eventform: React.FC<Iprops> = ({ onSaveEvent, saving }) => {
               value={eventTimeStart}
               label="Time"
               type="time"
+              required={true}
               height="3rem"
               onChange={e => seteventTimeStart(e.target.value)}
             />
