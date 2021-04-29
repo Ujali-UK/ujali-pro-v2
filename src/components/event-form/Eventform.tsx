@@ -36,6 +36,7 @@ const Eventform: React.FC<Iprops> = ({ onSaveEvent, saving }) => {
       <Box>
         <InputField
           label="Event Name"
+          required={true}
           type="text"
           value={eventName}
           height="3rem"
@@ -46,6 +47,7 @@ const Eventform: React.FC<Iprops> = ({ onSaveEvent, saving }) => {
           <CustomTextArea
             value={eventDescription}
             label="Event description"
+            required={true}
             placeholder="Enter description for your event"
             onChange={e => setEventDescription(e.target.value)}
           />
@@ -56,6 +58,7 @@ const Eventform: React.FC<Iprops> = ({ onSaveEvent, saving }) => {
             type="text"
             value={eventLocation}
             height="3rem"
+            required={true}
             placeholder="E.g: London"
             onChange={e => setEventLocation(e.target.value)}
           />
@@ -65,6 +68,7 @@ const Eventform: React.FC<Iprops> = ({ onSaveEvent, saving }) => {
             value={eventDateStart}
             label="Start Date"
             type="date"
+            required={true}
             height="3rem"
             onChange={e => setEventDateStart(e.target.value)}
           />
@@ -73,6 +77,7 @@ const Eventform: React.FC<Iprops> = ({ onSaveEvent, saving }) => {
               value={eventTimeStart}
               label="Time"
               type="time"
+              required={true}
               height="3rem"
               onChange={e => seteventTimeStart(e.target.value)}
             />
@@ -84,6 +89,7 @@ const Eventform: React.FC<Iprops> = ({ onSaveEvent, saving }) => {
             label="Price per person £"
             type="number"
             height="3rem"
+            required={true}
             placeholder="Price"
             onChange={value => setPricePerPerson(value)}
           />
@@ -93,6 +99,7 @@ const Eventform: React.FC<Iprops> = ({ onSaveEvent, saving }) => {
               label="Spaces available"
               type="number"
               height="3rem"
+              required={true}
               onChange={value => setSpacesAvailable(value)}
             />
           </Box>
