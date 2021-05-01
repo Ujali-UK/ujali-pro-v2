@@ -37,3 +37,12 @@
   justify-content: center;
   margin-top: 20%;
 }
+
+/* Calendar */
+.react-calendar,
+.react-calendar *,
+.react-calendar ::before,
+.react-calendar ::after {
+  box-sizing: border-box;
+  border-radius: 8px;
+}
