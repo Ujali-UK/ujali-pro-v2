@@ -11,12 +11,12 @@ import {
   ModalHeader,
   ModalOverlay,
 } from '@chakra-ui/modal';
-import { format } from 'date-fns/esm';
 import React, { useState } from 'react';
 import { useToast } from '@chakra-ui/react';
 import { MdDateRange, MdDelete, MdTimer } from 'react-icons/md';
 import { database } from '../../utils/firbase-config';
 import { nameShortner } from '../../utils/helpers';
+import { format } from 'date-fns';
 
 const EventCard = ({ event, getAllEvents, facilitatorDetails }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();

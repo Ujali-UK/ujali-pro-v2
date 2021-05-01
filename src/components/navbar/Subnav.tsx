@@ -2,12 +2,16 @@ import Icon from '@chakra-ui/icon';
 import { Input, InputGroup, InputLeftElement } from '@chakra-ui/input';
 import { Box, Text } from '@chakra-ui/layout';
 import { useRouter } from 'next/router';
-import React, { useState } from 'react';
+import React from 'react';
 import { MdSearch } from 'react-icons/md';
 
-const Subnav = () => {
+interface Iprops {
+  activeTab?: string;
+  setActiveTab?: (value: string) => void;
+}
+
+const Subnav: React.FC<Iprops> = ({ activeTab, setActiveTab }) => {
   const router = useRouter();
-  const [activeTab, setActiveTab] = useState('chats');
 
   return (
     <Box height="5rem" bgColor="brand.gray" width="full">
