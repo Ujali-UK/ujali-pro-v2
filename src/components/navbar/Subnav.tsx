@@ -43,7 +43,7 @@ const Subnav: React.FC<Iprops> = ({ activeTab, setActiveTab }) => {
         </Box>
       )}
       <Box
-        d="flex"
+        d={{ md: 'flex', base: 'none' }}
         justifyContent="space-between"
         px={{ base: '1rem', md: '8rem' }}
         pt="1.5rem"

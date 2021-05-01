@@ -11,7 +11,7 @@ const CustomHeading: React.FC<Iprops> = ({ value }) => {
       textTransform="uppercase"
       fontSize={{ base: 'md', md: '2xl' }}
       pt="2rem"
-      px={{ md: '2rem' }}
+      px={{ md: '2rem', base: '2rem' }}
     >
       {' '}
       {value}
