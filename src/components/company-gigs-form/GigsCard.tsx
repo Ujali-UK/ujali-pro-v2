@@ -11,7 +11,7 @@ import {
   ModalHeader,
   ModalOverlay,
 } from '@chakra-ui/modal';
-import { format } from 'date-fns/esm';
+import { format } from 'date-fns';
 import React, { useState } from 'react';
 import { useToast } from '@chakra-ui/react';
 import { MdDelete } from 'react-icons/md';

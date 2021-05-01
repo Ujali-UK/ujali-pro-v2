@@ -112,7 +112,7 @@ const Workshops = () => {
         });
         setSaving(false);
         // getFacilitatorDetails();
-        router.push('/facilitator/hub');
+        router.push('/facilitator/gigs');
       })
       .catch(error => {
         if (error) {
@@ -223,7 +223,7 @@ const Workshops = () => {
                   display={{ md: 'flex' }}
                   justifyContent="space-between"
                   px={{ md: '2rem' }}
-                  pt={{ md: '12rem' }}
+                  pt={{ md: '2rem' }}
                 >
                   <CustomButton
                     direction="previous"

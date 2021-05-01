@@ -33,30 +33,35 @@ const Navbar: FC = () => {
       <Box pt="2">
         <UjaliLogo boxSize={{ md: '3rem', base: '2rem' }} />
       </Box>
-      <Box d={{ md: 'flex', base: 'none' }} justifyContent="center" pt="1rem">
-        <Box
-          fontWeight="bold"
-          px="1rem"
-          borderBottom={
-            router?.pathname === '/facilitator/gigs' ? '5px solid orange' : ''
-          }
-          color={router?.pathname === '/facilitator/gigs' ? 'orange' : ''}
-        >
-          {' '}
-          <Link href="/facilitator/gigs">GIGS</Link>
+      {router.pathname.includes('/facilitator/hub') ||
+      router.pathname.includes('/facilitator/gigs') ? (
+        <Box d={{ md: 'flex', base: 'none' }} justifyContent="center" pt="1rem">
+          <Box
+            fontWeight="bold"
+            px="1rem"
+            borderBottom={
+              router?.pathname === '/facilitator/gigs' ? '5px solid orange' : ''
+            }
+            color={router?.pathname === '/facilitator/gigs' ? 'orange' : ''}
+          >
+            {' '}
+            <Link href="/facilitator/gigs">GIGS</Link>
+          </Box>
+          <Box
+            fontWeight="bold"
+            px="1rem"
+            borderBottom={
+              router?.pathname === '/facilitator/hub' ? '5px solid orange' : ''
+            }
+            color={router?.pathname === '/facilitator/hub' ? 'orange' : ''}
+          >
+            {' '}
+            <Link href="/facilitator/hub">HUB</Link>
+          </Box>
         </Box>
-        <Box
-          fontWeight="bold"
-          px="1rem"
-          borderBottom={
-            router?.pathname === '/facilitator/hub' ? '5px solid orange' : ''
-          }
-          color={router?.pathname === '/facilitator/hub' ? 'orange' : ''}
-        >
-          {' '}
-          <Link href="/facilitator/hub">HUB</Link>
-        </Box>
-      </Box>
+      ) : (
+        ''
+      )}
       <Box display="flex" fontWeight="bold">
         <Box>
           <Image
