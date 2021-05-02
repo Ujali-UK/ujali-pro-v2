@@ -1,3 +1,5 @@
+import { database } from './firbase-config';
+
 export const nameShortner = (name, length) => {
   if (name && length) {
     const splitName = name.split('');
@@ -9,4 +11,20 @@ export const nameShortner = (name, length) => {
   } else {
     return null;
   }
+};
+
+export const getFacilitatorUtil = async (user: string) => {
+  await database
+    .collection('facilitators')
+    .where('ownerUID', '==', user)
+    .get()
+    .then(snapshot => {
+      snapshot.docs.forEach(doc => {
+        doc.data();
+      });
+    })
+    .then(data => {
+      return data;
+      // console.log("data from helper", data)
+    });
 };
