@@ -135,6 +135,7 @@ const Gigs = () => {
                 allGigs.push(gigData);
               });
               setCompanyGigs(allGigs);
+              console.log('all gigs', allGigs);
             });
         });
       });

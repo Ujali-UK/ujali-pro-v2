@@ -85,7 +85,9 @@ const GigsCard = ({ gig, companyDetails, getAllGigs }) => {
         <Divider pt="4" orientation="horizontal" />
         <Text>
           <span style={{ fontWeight: 'bold' }}>Location:</span>{' '}
-          {gig?.eventLocation}
+          {gig.eventLocation && gig.eventLocation instanceof Object === true
+            ? gig.eventLocation.formattedAddress
+            : gig.eventLocation}
         </Text>
         <Box d="flex" justifyContent="space-between" pt="1rem">
           <Box>
@@ -93,7 +95,9 @@ const GigsCard = ({ gig, companyDetails, getAllGigs }) => {
             <Text fontWeight="bold">Start Date:</Text>
             <Text pt="0.2rem">
               {format(
-                gig?.eventDateStart ? new Date(gig.fromDate) : new Date(),
+                gig && gig.fromDate && gig.fromDate instanceof Object === false
+                  ? new Date(gig.fromDate)
+                  : new Date(),
                 'Lo LLL, yyyy'
               )}
             </Text>
@@ -103,7 +107,11 @@ const GigsCard = ({ gig, companyDetails, getAllGigs }) => {
             <Text fontWeight="bold">End Date:</Text>
             <Text>
               {format(
-                gig?.toDate ? new Date(gig.toDate) : new Date(),
+                gig?.toDate &&
+                  gig.toDate &&
+                  gig.toDate instanceof Object === false
+                  ? new Date(gig.toDate)
+                  : new Date(),
                 'Lo LLL, yyyy'
               )}
             </Text>
