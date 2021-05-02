@@ -18,7 +18,7 @@ const Navbar: FC = () => {
   const router = useRouter();
 
   useEffect(() => {
-    console.log('user info', router);
+    // console.log('user info', router);
   });
 
   return (
@@ -30,9 +30,10 @@ const Navbar: FC = () => {
       display="flex"
       justifyContent="space-between"
     >
-      <Box pt="2">
+      <Box pt="2" cursor="pointer" onClick={() => router.push('/')}>
         <UjaliLogo boxSize={{ md: '3rem', base: '2rem' }} />
       </Box>
+
       {router.pathname.includes('/facilitator/hub') ||
       router.pathname.includes('/facilitator/gigs') ? (
         <Box d={{ md: 'flex', base: 'none' }} justifyContent="center" pt="1rem">

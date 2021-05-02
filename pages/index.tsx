@@ -29,7 +29,7 @@ const Home = ({ router }) => {
           userResponse = doc.data();
         });
       })
-      .then(() => {
+      .then(async () => {
         setLoading(false);
         if (userResponse?.accountType.toLowerCase() === 'facilitator') {
           router.push('/facilitator/onboarding/overview');
