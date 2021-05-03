@@ -52,6 +52,7 @@ const SignUp = () => {
                   .add({
                     userUIDS: [newUser.uid],
                     ownerUID: newUser.uid,
+                    fullName: name,
                     createdAt: firebase.firestore.FieldValue.serverTimestamp(),
                   })
                   .then(async docRef => {

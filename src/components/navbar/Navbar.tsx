@@ -63,6 +63,49 @@ const Navbar: FC = () => {
       ) : (
         ''
       )}
+      {router.pathname.includes('/company/hub') ||
+      router.pathname.includes('/company/workshops') ||
+      router.pathname.includes('/company/facilitators') ? (
+        <Box d={{ md: 'flex', base: 'none' }} justifyContent="center" pt="1rem">
+          <Box
+            fontWeight="bold"
+            px="1rem"
+            borderBottom={
+              router?.pathname === '/company/facilitators'
+                ? '5px solid orange'
+                : ''
+            }
+            color={router?.pathname === '/company/facilitators' ? 'orange' : ''}
+          >
+            {' '}
+            <Link href="/company/facilitators">FACILITATORS</Link>
+          </Box>
+          <Box
+            fontWeight="bold"
+            px="1rem"
+            borderBottom={
+              router?.pathname === '/company/workshop' ? '5px solid orange' : ''
+            }
+            color={router?.pathname === '/company/workshop' ? 'orange' : ''}
+          >
+            {' '}
+            <Link href="/company/workshop">WORKSHOPS</Link>
+          </Box>
+          <Box
+            fontWeight="bold"
+            px="1rem"
+            borderBottom={
+              router?.pathname === '/company/hub' ? '5px solid orange' : ''
+            }
+            color={router?.pathname === '/company/hub' ? 'orange' : ''}
+          >
+            {' '}
+            <Link href="/company/hub">HUB</Link>
+          </Box>
+        </Box>
+      ) : (
+        ''
+      )}
       <Box display="flex" fontWeight="bold">
         <Box>
           <Image
