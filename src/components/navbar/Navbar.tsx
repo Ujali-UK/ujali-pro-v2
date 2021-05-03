@@ -64,7 +64,7 @@ const Navbar: FC = () => {
         ''
       )}
       {router.pathname.includes('/company/hub') ||
-      router.pathname.includes('/company/workshops') ||
+      router.pathname.includes('/company/workshop') ||
       router.pathname.includes('/company/facilitators') ? (
         <Box d={{ md: 'flex', base: 'none' }} justifyContent="center" pt="1rem">
           <Box
