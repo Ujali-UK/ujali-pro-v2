@@ -9,7 +9,6 @@ import { Box, Text } from '@chakra-ui/layout';
 import PageLoader from '../../../../src/components/loaders/PageLoader';
 import CustomHeading from '../../../../src/components/common/custom-heading';
 import InputField from '../../../../src/components/inputs/Input-field';
-import SelectInput from '../../../../src/components/inputs/SelectInput';
 import Icon from '@chakra-ui/icon';
 import { MdDelete } from 'react-icons/md';
 import CustomButton from '../../../../src/components/common/CustomButton';
@@ -24,13 +23,16 @@ const Rates = () => {
   const [loading, setLoading] = useState(false);
   const [dailyRate, setDailyRate] = useState();
   const [weeklyRate, setWeeklyRate] = useState('');
-  const [travelRequirements, setTravelRequirements] = useState('');
+  const [values, setValues] = useState(['']);
+  // const [travelRequirements, setTravelRequirements] = useState('');
   const [specialRequirements, setSpecialRequirements] = useState([
     { requirements: '' },
   ]);
   const [sortCode, setSortCode] = useState('');
   const [accountHolderName, setAccountHolderName] = useState('');
   const [accountNumber, setAccountNumber] = useState('');
+  const [interests, setInterests] = useState(['']);
+  const [deliveryArray, setDeliveryArray] = useState([{ deliveryStyle: '' }]);
 
   useEffect(() => {
     setLoading(true);
@@ -38,6 +40,24 @@ const Rates = () => {
       getFacilitatorDetails();
     }
   }, [user]);
+
+  const onAddDeliveryStyle = () => {
+    const tempDelivaryArray = [...deliveryArray];
+    tempDelivaryArray.push({ deliveryStyle: '' });
+    setDeliveryArray(tempDelivaryArray);
+  };
+
+  const onChangeDeliveryStyle = (value, index) => {
+    const tempDelivaryArray = [...deliveryArray];
+    tempDelivaryArray[index].deliveryStyle = value;
+    setDeliveryArray(tempDelivaryArray);
+  };
+
+  const onDeleteDeliveryStyle = index => {
+    const tempDelivaryArray = [...deliveryArray];
+    const afterdelete = tempDelivaryArray.filter((item, i) => index !== i);
+    setDeliveryArray(afterdelete);
+  };
 
   const getFacilitatorDetails = async () => {
     await database
@@ -48,16 +68,18 @@ const Rates = () => {
         snapshot.docs.forEach(doc => {
           setFacilitatorDetails(doc.data());
           const data = doc.data();
+          setDeliveryArray(
+            data.deliveryArray ? data.deliveryArray : { deliveryStyle: '' }
+          );
           setDailyRate(data.dailyRate ? data.dailyRate : 0);
           setWeeklyRate(data.weeklyRate ? data.weeklyRate : 0);
-          setTravelRequirements(
-            data.travelRequirements ? data.travelRequirements : ''
-          );
+          setInterests(data.interestsArray ? data.interestsArray : ['']);
           setSpecialRequirements(
             data.specialRequirements
               ? data.specialRequirements
               : [{ requirements: '' }]
           );
+          setValues(data.valuesArray ? data.valuesArray : ['']);
           setSortCode(data.sortCode ? data.sortCode : '');
           setAccountNumber(data.accountNumber ? data.accountNumber : '');
           setAccountHolderName(
@@ -81,12 +103,14 @@ const Rates = () => {
     const details = {
       dailyRate,
       weeklyRate,
-      travelRequirements,
       specialRequirements,
       sortCode,
       accountNumber,
       accountHolderName,
+      deliveryArray,
+      interestsArray: interests,
       ratesAndRequirements: true,
+      valuesArray: values,
     };
     database
       .collection('facilitators')
@@ -143,6 +167,46 @@ const Rates = () => {
     }
   };
 
+  const onDeleteInterest = index => {
+    if (index > 0) {
+      const tempInterests = [...interests];
+      const afterdelete = tempInterests.filter((item, i) => index !== i);
+      setInterests(afterdelete);
+    }
+  };
+
+  const onAddInterest = () => {
+    const tempInterests = [...interests];
+    tempInterests.push('');
+    setInterests(tempInterests);
+  };
+
+  const onChangeInterest = (value, index) => {
+    const tempInterests = [...interests];
+    tempInterests[index] = value;
+    setInterests(tempInterests);
+  };
+
+  const onChangeValues = (value, index) => {
+    const tempvalues = [...values];
+    tempvalues[index] = value;
+    setValues(tempvalues);
+  };
+
+  const onAddValue = () => {
+    const tempValues = [...values];
+    tempValues.push('');
+    setValues(tempValues);
+  };
+
+  const onDeleteValues = index => {
+    if (index > 0) {
+      const tempValues = [...values];
+      const afterdelete = tempValues.filter((item, i) => index !== i);
+      setValues(afterdelete);
+    }
+  };
+
   return (
     <Protected>
       <FacilitatorProgres facilitatorDetails={facilitatorDetails} />
@@ -175,18 +239,7 @@ const Rates = () => {
               </Box>
             </Box>
             <CustomHeading value="Requirements" />
-            <Box width="full" pt="1rem" px={{ md: '2rem' }}>
-              <SelectInput
-                value={travelRequirements}
-                label="Travel and accomodation requirements"
-                placeholder="Select preferred travel arrangement"
-                onChange={e => setTravelRequirements(e.target.value)}
-                options={[
-                  'Travel & Accommodation to be arranged by Ujali',
-                  'I will arrange Travel & Accommodation',
-                ]}
-              />
-            </Box>
+
             {specialRequirements.map((req, i) => {
               return (
                 <Box
@@ -261,6 +314,137 @@ const Rates = () => {
                 />
               </Box>
             </Box>
+
+            <Text px={{ md: '2rem' }} mt="3rem">
+              Add your personal interests
+            </Text>
+            {interests && interests.length > 0
+              ? interests.map((interest, i) => {
+                  return (
+                    <Box
+                      key={i}
+                      display={{ md: 'flex' }}
+                      justifyContent="space-between"
+                    >
+                      <Box width="full" pt="1rem" px={{ md: '2rem' }}>
+                        <InputField
+                          label={i < 1 ? 'Interests' : ''}
+                          type="text"
+                          value={interest}
+                          height="3rem"
+                          placeholder="E.g Leadership"
+                          onChange={e => onChangeInterest(e.target.value, i)}
+                        />
+                      </Box>
+                      <Icon
+                        color="red"
+                        onClick={() => onDeleteInterest(i)}
+                        mt="2rem"
+                        display={i < 1 ? 'none' : ''}
+                        cursor="pointer"
+                        as={MdDelete}
+                        w={6}
+                        h={6}
+                      />
+                    </Box>
+                  );
+                })
+              : ''}
+            <Text
+              onClick={onAddInterest}
+              px={{ md: '2rem' }}
+              color="brand.orange"
+              cursor="pointer"
+            >
+              + Add Interest
+            </Text>
+
+            <Text px={{ md: '2rem' }} mt="3rem">
+              Your characteristics and behaviours that describes your
+              personality (Accountability, Reliable, Efficient,
+              Results-oriented, e.t.c){' '}
+            </Text>
+
+            {values && values.length > 0
+              ? values.map((val, i) => {
+                  return (
+                    <Box
+                      key={i}
+                      display={{ md: 'flex' }}
+                      justifyContent="space-between"
+                    >
+                      <Box width="full" pt="1rem" px={{ md: '2rem' }}>
+                        <InputField
+                          label={i < 1 ? 'Values' : ''}
+                          type="text"
+                          value={val}
+                          height="3rem"
+                          placeholder="E.g Accountability"
+                          onChange={e => onChangeValues(e.target.value, i)}
+                        />
+                      </Box>
+                      <Icon
+                        color="red"
+                        onClick={() => onDeleteValues(i)}
+                        mt="2rem"
+                        display={i < 1 ? 'none' : ''}
+                        cursor="pointer"
+                        as={MdDelete}
+                        w={6}
+                        h={6}
+                      />
+                    </Box>
+                  );
+                })
+              : ''}
+            <Text
+              onClick={onAddValue}
+              px={{ md: '2rem' }}
+              color="brand.orange"
+              cursor="pointer"
+            >
+              + Add values
+            </Text>
+
+            {deliveryArray.map((delivery, i) => {
+              return (
+                <Box
+                  key={i}
+                  display={{ md: 'flex' }}
+                  justifyContent="space-between"
+                >
+                  <Box width="full" pt="1rem" px={{ md: '2rem' }}>
+                    <InputField
+                      label={i < 1 ? 'Delivery Style' : ''}
+                      type="text"
+                      value={delivery.deliveryStyle}
+                      height="3rem"
+                      placeholder="special requirements"
+                      onChange={e => onChangeDeliveryStyle(e.target.value, i)}
+                    />
+                  </Box>
+                  <Icon
+                    color="red"
+                    onClick={() => onDeleteDeliveryStyle(i)}
+                    mt="2rem"
+                    display={i < 1 ? 'none' : ''}
+                    cursor="pointer"
+                    as={MdDelete}
+                    w={6}
+                    h={6}
+                  />
+                </Box>
+              );
+            })}
+            <Text
+              onClick={onAddDeliveryStyle}
+              px={{ md: '2rem' }}
+              color="brand.orange"
+              cursor="pointer"
+            >
+              + Add delivery style
+            </Text>
+
             <Box
               display={{ md: 'flex' }}
               justifyContent="space-between"
