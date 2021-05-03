@@ -286,7 +286,7 @@ const Overview = () => {
               />
             </Box>
             <Box width="full" pt="1rem" px={{ md: '2rem' }}>
-              <FormLabel fontWeight="bold">Topics</FormLabel>
+              <FormLabel fontWeight="bold">Areas of Expertise</FormLabel>
               <CustomMultiSelect
                 value={topics}
                 onChange={val => setTopics(val)}

@@ -129,7 +129,6 @@ const Navbar: FC = () => {
             <MenuItem>Profile Settings</MenuItem>
             <MenuItem onClick={logout}>Sign Out</MenuItem>
             <MenuItem>Contact Ujali</MenuItem>
-            <MenuItem>Book a Workshop</MenuItem>
           </MenuList>
         </Menu>
       </Box>

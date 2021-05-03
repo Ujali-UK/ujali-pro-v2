@@ -46,9 +46,6 @@ const Facilitators = () => {
           pt="2rem"
         >
           <FacilitatorCard />
-          <FacilitatorCard />
-          <FacilitatorCard />
-          <FacilitatorCard />
         </Grid>
       </Box>
     </Protected>

@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import {
   useEffect,
   useState,
@@ -25,6 +26,7 @@ const AuthProvider: FunctionComponent = ({ children }) => {
   const [user, setUser] = useState<firebase.User | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [userInfo, setUserInfo] = useState({});
+  const router = useRouter();
 
   useEffect(() => {
     const cancelAuthListener = firebase.auth().onIdTokenChanged(currentUser => {
@@ -59,7 +61,10 @@ const AuthProvider: FunctionComponent = ({ children }) => {
         user,
         userInfo,
         loading,
-        logout: () => firebase.auth().signOut(),
+        logout: () => {
+          firebase.auth().signOut();
+          router.push('/');
+        },
       }}
     >
       {children}
