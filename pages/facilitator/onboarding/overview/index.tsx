@@ -52,6 +52,10 @@ const Overview = () => {
     }
   }, [user]);
 
+  /**
+   * @description Save facilitator overview
+   * @param e event
+   */
   const onSaveFacilitatorOverview = async e => {
     e.preventDefault();
     setSaving(true);
