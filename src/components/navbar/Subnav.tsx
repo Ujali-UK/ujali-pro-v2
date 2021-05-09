@@ -14,7 +14,7 @@ const Subnav: React.FC<Iprops> = ({ activeTab, setActiveTab }) => {
   const router = useRouter();
 
   return (
-    <Box height="5rem" bgColor="brand.gray" width="full">
+    <Box height="5rem" overflowY="scroll" bgColor="brand.gray" width="full">
       {router.pathname.includes('gigs') && (
         <Box d="flex" justifyContent="space-between" px="1rem">
           <Box pt="1rem" width={{ base: 'full', md: '50%' }}>
@@ -43,8 +43,8 @@ const Subnav: React.FC<Iprops> = ({ activeTab, setActiveTab }) => {
         </Box>
       )}
       <Box
-        d={{ md: 'flex', base: 'none' }}
-        justifyContent="space-between"
+        d={{ md: 'flex' }}
+        justifyContent={{ md: 'space-between' }}
         px={{ base: '1rem', md: '8rem' }}
         pt="1.5rem"
       >
