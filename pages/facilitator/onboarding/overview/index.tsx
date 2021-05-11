@@ -434,35 +434,16 @@ const Overview = () => {
             </Text>
 
             <CustomHeading value="Social media and internet" />
-            <Box width="full" pt="1rem" px={{ md: '2rem' }}>
-              <InputField
-                value={companyWebsite}
-                label="Company Website"
-                type="text"
-                height="3rem"
-                placeholder="https://"
-                onChange={e => setCompanyWebsite(e.target.value)}
-              />
-            </Box>
+
             <Box display={{ md: 'flex' }} justifyContent="space-between">
               <Box width="full" pt="1rem" px={{ md: '2rem' }}>
                 <InputField
-                  value={facebookCompanyProfile}
-                  label="Facebook profile"
+                  value={companyWebsite}
+                  label="Company Website"
                   type="text"
                   height="3rem"
-                  placeholder="Facebook"
-                  onChange={e => setfacebookCompanyProfile(e.target.value)}
-                />
-              </Box>
-              <Box width="full" pt="1rem" px={{ md: '2rem' }}>
-                <InputField
-                  value={twitterCompanyProfile}
-                  label="Twitter Profile"
-                  type="text"
-                  height="3rem"
-                  placeholder="Twitter"
-                  onChange={e => setTwitterCompanyProfile(e.target.value)}
+                  placeholder="https://"
+                  onChange={e => setCompanyWebsite(e.target.value)}
                 />
               </Box>
               <Box width="full" pt="1rem" px={{ md: '2rem' }}>
