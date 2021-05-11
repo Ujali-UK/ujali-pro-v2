@@ -1,5 +1,4 @@
 import { Button } from '@chakra-ui/button';
-import { FormLabel } from '@chakra-ui/form-control';
 import Icon from '@chakra-ui/icon';
 import { Box, Divider, Text } from '@chakra-ui/layout';
 import { useToast } from '@chakra-ui/toast';
@@ -7,7 +6,6 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { MdArrowForward, MdDelete } from 'react-icons/md';
 import CustomHeading from '../../../../src/components/common/custom-heading';
-import CustomMultiSelect from '../../../../src/components/common/multi-select';
 import CoverImage from '../../../../src/components/CoverImage';
 import CustomTextArea from '../../../../src/components/inputs/CustomTextArea';
 import InputField from '../../../../src/components/inputs/Input-field';
@@ -35,6 +33,7 @@ const Overview = () => {
   const [companyPhone, setCompanyPhone] = useState('');
   const [servicesOffer, setServicesOffer] = useState('');
   const [topics, setTopics] = useState([]);
+  const [areasOfExpertise, setAreasOfExpertise] = useState('');
   const [facebookCompanyProfile, setfacebookCompanyProfile] = useState('');
   const [linkedInCompanyProfile, setLinkedInCompanyProfile] = useState('');
   const [twitterCompanyProfile, setTwitterCompanyProfile] = useState('');
@@ -74,6 +73,7 @@ const Overview = () => {
       companyWebsite,
       certificationArray,
       teamArray,
+      areasOfExpertise,
       overview: true,
     };
     database
@@ -130,6 +130,9 @@ const Overview = () => {
           setCompanyLocation(data.companyLocation ? data.companyLocation : '');
           setCoverImage(doc.data()?.coverImage);
           setCompanyEmail(data.companyEmail ? data.companyEmail : '');
+          setAreasOfExpertise(
+            data.areasOfExpertise ? data.areasOfExpertise : ''
+          );
           setCompanyPhone(data.companyPhone ? data.companyPhone : '');
           setServicesOffer(data.serviceOffer ? data.serviceOffer : '');
           setTopics(data.topics ? data.topics : '');
@@ -290,11 +293,20 @@ const Overview = () => {
               />
             </Box>
             <Box width="full" pt="1rem" px={{ md: '2rem' }}>
-              <FormLabel fontWeight="bold">Areas of Expertise</FormLabel>
-              <CustomMultiSelect
+              <InputField
+                value={areasOfExpertise}
+                label="Areas Of Expertise"
+                type="text"
+                height="3rem"
+                placeholder="E.g Leadership"
+                required
+                onChange={e => setAreasOfExpertise(e.target.value)}
+              />
+              {/* <FormLabel fontWeight="bold">Areas of Expertise</FormLabel> */}
+              {/* <CustomMultiSelect
                 value={topics}
                 onChange={val => setTopics(val)}
-              />
+              /> */}
             </Box>
 
             <CustomHeading value="Certifications" />
