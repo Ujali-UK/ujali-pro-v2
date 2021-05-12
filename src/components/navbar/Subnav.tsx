@@ -46,7 +46,7 @@ const Subnav: React.FC<Iprops> = ({ activeTab, setActiveTab }) => {
         d={{ md: 'flex' }}
         justifyContent={{ md: 'space-between' }}
         px={{ base: '1rem', md: '8rem' }}
-        pt="1.5rem"
+        pt={{ md: '1.5rem', sm: '0.5rem' }}
       >
         <Box
           onClick={() => setActiveTab('chats')}

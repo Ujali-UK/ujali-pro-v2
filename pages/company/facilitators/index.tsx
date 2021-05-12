@@ -6,8 +6,13 @@ import { MdSearch } from 'react-icons/md';
 import CustomHeading from '../../../src/components/common/custom-heading';
 import FacilitatorCard from '../../../src/components/facilitator-card/FacilitatorCard';
 import Protected from '../../../src/layout/Protected';
+// import { database } from '../../../src/utils/firbase-config';
 
 const Facilitators = () => {
+  // const getAllFacilitators = async () => {
+  //   database.collection('facilitators').get()
+  // }
+
   return (
     <Protected>
       <Box height="5rem" bgColor="brand.gray" width="full">

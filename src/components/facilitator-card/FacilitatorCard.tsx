@@ -21,12 +21,13 @@ const FacilitatorCard = () => {
       <Box
         w="100%"
         height="8rem"
+        bgGradient="linear(to-r, brand.orange, pink.100)"
         bgPos="center"
         bgSize="cover"
         d="flex"
         justifyContent="center"
         borderRadius="sm"
-        pt="1.5rem"
+        pt="2rem"
       >
         <Image
           h="16"

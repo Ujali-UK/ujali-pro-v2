@@ -9,8 +9,6 @@ import { database, firebase } from '../../../../src/utils/firbase-config';
 import CustomHeading from '../../../../src/components/common/custom-heading';
 import InputField from '../../../../src/components/inputs/Input-field';
 import CustomTextArea from '../../../../src/components/inputs/CustomTextArea';
-import { FormLabel } from '@chakra-ui/form-control';
-import CustomMultiSelect from '../../../../src/components/common/multi-select';
 import CustomButton from '../../../../src/components/common/CustomButton';
 import CompanyCoverImage from '../../../../src/components/CompanyCoverImage';
 import CompanyTabs from '../../../../src/components/company-tabs/CompanyTabs';
@@ -30,7 +28,7 @@ const CompanyOverview = () => {
   const [companyLocation, setCompanyLocation] = useState('');
   const [companyEmail, setCompanyEmail] = useState('');
   const [companyPhone, setCompanyPhone] = useState('');
-  const [trainingRequirements, setTrainingRequirements] = useState([]);
+  const [trainingRequirements, setTrainingRequirements] = useState('');
   const [companyWebsite, setCompanyWebsite] = useState('');
   const [facebookCompanyProfile, setfacebookCompanyProfile] = useState('');
   const [linkedInCompanyProfile, setLinkedInCompanyProfile] = useState('');
@@ -206,44 +204,36 @@ const CompanyOverview = () => {
             </Box>
           </Box>
           <CustomHeading value="Training requirements" />
-          <Box width="full" pt="1rem" px={{ md: '2rem' }}>
+          {/* <Box width="full" pt="1rem" px={{ md: '2rem' }}>
             <FormLabel fontWeight="bold">Topics</FormLabel>
             <CustomMultiSelect
               value={trainingRequirements}
               onChange={val => setTrainingRequirements(val)}
             />
+          </Box> */}
+          <Box width="full" pt="1rem" px={{ md: '2rem' }}>
+            <InputField
+              value={
+                Array.isArray(trainingRequirements) ? '' : trainingRequirements
+              }
+              label="Topics"
+              type="text"
+              height="3rem"
+              placeholder="E.g Leadership"
+              onChange={e => setTrainingRequirements(e.target.value)}
+            />
           </Box>
 
           <CustomHeading value="Social media and internet" />
-          <Box width="full" pt="1rem" px={{ md: '2rem' }}>
-            <InputField
-              value={companyWebsite}
-              label="Company Website"
-              type="text"
-              height="3rem"
-              placeholder="https://"
-              onChange={e => setCompanyWebsite(e.target.value)}
-            />
-          </Box>
           <Box display={{ md: 'flex' }} justifyContent="space-between">
             <Box width="full" pt="1rem" px={{ md: '2rem' }}>
               <InputField
-                value={facebookCompanyProfile}
-                label="Facebook profile"
+                value={companyWebsite}
+                label="Company Website"
                 type="text"
                 height="3rem"
-                placeholder="Facebook"
-                onChange={e => setfacebookCompanyProfile(e.target.value)}
-              />
-            </Box>
-            <Box width="full" pt="1rem" px={{ md: '2rem' }}>
-              <InputField
-                value={twitterCompanyProfile}
-                label="Twitter Profile"
-                type="text"
-                height="3rem"
-                placeholder="Twitter"
-                onChange={e => setTwitterCompanyProfile(e.target.value)}
+                placeholder="https://"
+                onChange={e => setCompanyWebsite(e.target.value)}
               />
             </Box>
             <Box width="full" pt="1rem" px={{ md: '2rem' }}>
