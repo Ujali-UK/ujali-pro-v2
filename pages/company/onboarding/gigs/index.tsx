@@ -215,7 +215,7 @@ const Gigs = () => {
               display={{ md: 'flex' }}
               justifyContent="space-between"
               px={{ md: '2rem' }}
-              pt={{ md: '6rem' }}
+              pt={{ md: '3rem' }}
             >
               <CustomButton
                 direction="previous"

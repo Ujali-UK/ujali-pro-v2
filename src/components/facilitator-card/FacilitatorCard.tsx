@@ -21,13 +21,13 @@ const FacilitatorCard = () => {
       <Box
         w="100%"
         height="8rem"
-        bgImage="url('https://res.cloudinary.com/w3bh4ck/image/upload/v1617668753/ujali/ujali-pro/facilitators-cover-image.jpg')"
+        bgGradient="linear(to-r, brand.orange, pink.100)"
         bgPos="center"
         bgSize="cover"
         d="flex"
         justifyContent="center"
         borderRadius="sm"
-        pt="1.5rem"
+        pt="2rem"
       >
         <Image
           h="16"
