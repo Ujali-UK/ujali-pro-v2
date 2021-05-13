@@ -28,3 +28,15 @@ export const getFacilitatorUtil = async (user: string) => {
       // console.log("data from helper", data)
     });
 };
+
+/**
+ *
+ * @param {*} x a number to add commas to
+ */
+export const numberWithCommas = (x: string | number) => {
+  if (x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  } else {
+    return 0;
+  }
+};

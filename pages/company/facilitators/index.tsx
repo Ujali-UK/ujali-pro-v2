@@ -1,17 +1,40 @@
 import Icon from '@chakra-ui/icon';
 import { Input, InputGroup, InputLeftElement } from '@chakra-ui/input';
 import { Box, Grid, Text } from '@chakra-ui/layout';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { MdSearch } from 'react-icons/md';
 import CustomHeading from '../../../src/components/common/custom-heading';
 import FacilitatorCard from '../../../src/components/facilitator-card/FacilitatorCard';
 import Protected from '../../../src/layout/Protected';
-// import { database } from '../../../src/utils/firbase-config';
+import { database } from '../../../src/utils/firbase-config';
 
 const Facilitators = () => {
-  // const getAllFacilitators = async () => {
-  //   database.collection('facilitators').get()
-  // }
+  const [facilitators, setFacilitators] = useState([]);
+
+  const getAllFacilitators = async () => {
+    const tempFacilitators = [];
+    const ref = database
+      .collection('facilitators')
+      .orderBy('createdAt')
+      .limit(10);
+
+    const data = await ref.get();
+    data.docs.forEach(doc => {
+      tempFacilitators.push(doc.data());
+    });
+    console.log('check tempFacilitators', tempFacilitators);
+    setFacilitators(tempFacilitators);
+    // database.collection('facilitators').orderBy('createdAt').get().then((snapshot) => {
+    //   snapshot.docs.forEach(doc => {
+    //     tempFacilitators.push(doc.data())
+    //   })
+    //   console.log("check data", tempFacilitators)
+    // })
+  };
+
+  useEffect(() => {
+    getAllFacilitators();
+  }, []);
 
   return (
     <Protected>
@@ -50,7 +73,11 @@ const Facilitators = () => {
           px={{ base: '1rem', md: '2rem' }}
           pt="2rem"
         >
-          <FacilitatorCard />
+          {facilitators && facilitators.length > 0
+            ? facilitators.map((facilitator, i) => {
+                return <FacilitatorCard facilitator={facilitator} key={i} />;
+              })
+            : ''}
         </Grid>
       </Box>
     </Protected>
