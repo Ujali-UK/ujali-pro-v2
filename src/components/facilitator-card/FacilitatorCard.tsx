@@ -73,7 +73,7 @@ const FacilitatorCard = ({ facilitator }) => {
           £30 per day / £100 per week
         </Text>
         <Text fontSize="xs" color="brand.gray">
-          This is the exact company bio
+          {facilitator?.aboutFacilitator}
         </Text>
         <Divider orientation="horizontal" mb="1rem" mt="0.5rem" />
         <Text
