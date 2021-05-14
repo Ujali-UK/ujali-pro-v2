@@ -5,7 +5,7 @@ import React from 'react';
 import { MdAddCircle } from 'react-icons/md';
 import ReactStars from 'react-stars';
 
-const FacilitatorCard = () => {
+const FacilitatorCard = ({ facilitator }) => {
   return (
     <Box
       w="100%"
@@ -32,7 +32,11 @@ const FacilitatorCard = () => {
         <Image
           h="16"
           w="16"
-          src="https://res.cloudinary.com/w3bh4ck/image/upload/v1585801837/person-placeholder.jpg"
+          src={
+            facilitator.profilePicture && facilitator.profilePicture.length > 0
+              ? facilitator.profilePicture
+              : 'https://res.cloudinary.com/w3bh4ck/image/upload/v1585801837/person-placeholder.jpg'
+          }
           alt="IMG"
           borderRadius="full"
         />
@@ -45,12 +49,17 @@ const FacilitatorCard = () => {
             fontSize="lg"
             pr="0.4rem"
           >
-            {' '}
-            Jane Doe,{' '}
+            {facilitator?.fullName}
           </Text>
-          <Text color="brand.gray">carlisle@gmail.com</Text>
+          {/* <Text color="brand.gray">carlisle@gmail.com</Text> */}
         </Box>
-        <Text color="brand.gray">Lagos,</Text>
+        <Text color="brand.gray">
+          {' '}
+          {typeof facilitator?.companyLocation === 'object'
+            ? facilitator?.companyLocation?.formattedAddress
+            : facilitator?.companyLocation}
+          ,
+        </Text>
         <Divider orientation="horizontal" mb="1rem" />
         <Text
           textTransform="capitalize"
@@ -58,13 +67,13 @@ const FacilitatorCard = () => {
           fontSize="lg"
           pr="0.4rem"
         >
-          Voyance Group of Companies
+          {facilitator?.companyName}
         </Text>
         <Text fontSize="xs" color="brand.orange">
           £30 per day / £100 per week
         </Text>
         <Text fontSize="xs" color="brand.gray">
-          This is the exact company bio
+          {facilitator?.aboutFacilitator}
         </Text>
         <Divider orientation="horizontal" mb="1rem" mt="0.5rem" />
         <Text
