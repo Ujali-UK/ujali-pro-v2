@@ -136,8 +136,11 @@ const Workshops = () => {
         snapshot.docs.forEach(doc => {
           const data = doc.data();
           setFacilitatorDetails(data);
-          if (!data.deliveryStyle && !data.deliveryStyle === true) {
-            router.replace('/facilitator/onboarding/interests');
+          if (
+            !data.ratesAndRequirements &&
+            !data.ratesAndRequirements === true
+          ) {
+            router.replace('/facilitator/onboarding/rates');
           }
           setLoading(false);
         });

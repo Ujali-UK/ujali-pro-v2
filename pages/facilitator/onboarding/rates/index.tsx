@@ -129,7 +129,7 @@ const Rates = () => {
       })
       .then(() => {
         setSaving(false);
-        router.push('/facilitator/onboarding/delivery-style');
+        router.push('/facilitator/onboarding/workshops');
         // getFacilitatorDetails();
       })
       .catch(error => {
@@ -406,36 +406,40 @@ const Rates = () => {
               + Add values
             </Text>
 
-            {deliveryArray.map((delivery, i) => {
-              return (
-                <Box
-                  key={i}
-                  display={{ md: 'flex' }}
-                  justifyContent="space-between"
-                >
-                  <Box width="full" pt="1rem" px={{ md: '2rem' }}>
-                    <InputField
-                      label={i < 1 ? 'Delivery Style' : ''}
-                      type="text"
-                      value={delivery.deliveryStyle}
-                      height="3rem"
-                      placeholder="special requirements"
-                      onChange={e => onChangeDeliveryStyle(e.target.value, i)}
-                    />
-                  </Box>
-                  <Icon
-                    color="red"
-                    onClick={() => onDeleteDeliveryStyle(i)}
-                    mt="2rem"
-                    display={i < 1 ? 'none' : ''}
-                    cursor="pointer"
-                    as={MdDelete}
-                    w={6}
-                    h={6}
-                  />
-                </Box>
-              );
-            })}
+            {deliveryArray && Array.isArray(deliveryArray)
+              ? deliveryArray.map((delivery, i) => {
+                  return (
+                    <Box
+                      key={i}
+                      display={{ md: 'flex' }}
+                      justifyContent="space-between"
+                    >
+                      <Box width="full" pt="1rem" px={{ md: '2rem' }}>
+                        <InputField
+                          label={i < 1 ? 'Delivery Style' : ''}
+                          type="text"
+                          value={delivery.deliveryStyle}
+                          height="3rem"
+                          placeholder="special requirements"
+                          onChange={e =>
+                            onChangeDeliveryStyle(e.target.value, i)
+                          }
+                        />
+                      </Box>
+                      <Icon
+                        color="red"
+                        onClick={() => onDeleteDeliveryStyle(i)}
+                        mt="2rem"
+                        display={i < 1 ? 'none' : ''}
+                        cursor="pointer"
+                        as={MdDelete}
+                        w={6}
+                        h={6}
+                      />
+                    </Box>
+                  );
+                })
+              : ''}
             <Text
               onClick={onAddDeliveryStyle}
               px={{ md: '2rem' }}

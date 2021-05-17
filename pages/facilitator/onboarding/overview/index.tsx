@@ -13,7 +13,7 @@ import PageLoader from '../../../../src/components/loaders/PageLoader';
 import FacilitatorProgres from '../../../../src/components/navbar/Facilitator-progress-nav';
 import Protected from '../../../../src/layout/Protected';
 import { useAuth } from '../../../../src/providers/auth-provider/Auth-provider';
-import { database, firebase } from '../../../../src/utils/firbase-config';
+import { database } from '../../../../src/utils/firbase-config';
 
 const Overview = () => {
   const { user } = useAuth();
@@ -81,7 +81,7 @@ const Overview = () => {
       .doc(facilitatorDetails?.id)
       .update({
         ...details,
-        updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+        updatedAt: Date.now(),
       })
       .then(() => {
         toast({

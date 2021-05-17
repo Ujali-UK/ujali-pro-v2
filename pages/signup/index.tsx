@@ -41,7 +41,7 @@ const SignUp = () => {
               fullName: name,
               email: email,
               uid: newUser.uid,
-              createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+              createdAt: Date.now(),
               registration: true,
               checkedReceive: true,
             })
@@ -53,7 +53,7 @@ const SignUp = () => {
                     userUIDS: [newUser.uid],
                     ownerUID: newUser.uid,
                     fullName: name,
-                    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                    createdAt: Date.now(),
                   })
                   .then(async docRef => {
                     await db.collection('facilitators').doc(docRef.id).set(
@@ -69,7 +69,7 @@ const SignUp = () => {
                   .add({
                     userUIDS: [newUser.uid],
                     ownerUID: newUser.uid,
-                    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                    createdAt: Date.now(),
                   })
                   .then(async docRef => {
                     await db.collection('companies').doc(docRef.id).set(
