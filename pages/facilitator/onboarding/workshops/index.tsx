@@ -21,7 +21,7 @@ import PageLoader from '../../../../src/components/loaders/PageLoader';
 import FacilitatorProgres from '../../../../src/components/navbar/Facilitator-progress-nav';
 import Protected from '../../../../src/layout/Protected';
 import { useAuth } from '../../../../src/providers/auth-provider/Auth-provider';
-import { database, firebase } from '../../../../src/utils/firbase-config';
+import { database } from '../../../../src/utils/firbase-config';
 
 const Workshops = () => {
   const { user } = useAuth();
@@ -52,7 +52,7 @@ const Workshops = () => {
         ...details,
         ownerUID: facilitatorDetails?.ownerUID,
         facilitatorId: facilitatorDetails?.id,
-        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+        createdAt: Date.now(),
         coverImage: facilitatorDetails.coverImage
           ? facilitatorDetails.coverImage
           : '',
