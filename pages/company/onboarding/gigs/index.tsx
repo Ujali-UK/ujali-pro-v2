@@ -23,7 +23,7 @@ import CompanyTabs from '../../../../src/components/company-tabs/CompanyTabs';
 import PageLoader from '../../../../src/components/loaders/PageLoader';
 import Protected from '../../../../src/layout/Protected';
 import { useAuth } from '../../../../src/providers/auth-provider/Auth-provider';
-import { database, firebase } from '../../../../src/utils/firbase-config';
+import { database } from '../../../../src/utils/firbase-config';
 
 const Gigs = () => {
   const { user } = useAuth();
@@ -76,7 +76,7 @@ const Gigs = () => {
         ownerUID: companyDetails?.ownerUID,
         companyID: companyDetails?.id,
         coverImage: companyDetails?.coverImage,
-        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+        createdAt: Date.now(),
       })
       .then(async docRef => {
         database
