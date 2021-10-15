@@ -170,6 +170,7 @@ const Workshops = () => {
                 const eventData = event.data();
                 allevents.push(eventData);
               });
+              console.log('check all events', allevents);
               setFacilitatorEvents(allevents);
             });
         });

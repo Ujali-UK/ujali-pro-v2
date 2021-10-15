@@ -85,7 +85,10 @@ const EventCard = ({ event, getAllEvents, facilitatorDetails }) => {
         <Divider pt="4" orientation="horizontal" />
         <Text>
           <span style={{ fontWeight: 'bold' }}>Location:</span>{' '}
-          {event.eventLocation}
+          {/* {event.eventLocation} */}
+          {typeof event?.eventLocation === 'object'
+            ? event?.eventLocation?.formattedAddress
+            : event?.eventLocation}
         </Text>
         <Box d="flex" justifyContent="space-between" pt="1rem">
           <Box d="flex">
